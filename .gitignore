@@ -1,0 +1,11 @@
+# Claude Code skill files — not part of the website
+ui-ux-pro-max-skill-main/
+protocol/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.code-workspace

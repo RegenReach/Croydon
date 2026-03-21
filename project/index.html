@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Croydon Bake House — Premium wholesale bakery in Croydon, VIC. Fresh pies, slices, pastries, cakes and scrolls." />
+  <title>Croydon Bake House | Premium Wholesale Bakery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- PRELOADER -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader__inner">
+      <span class="preloader__logo">Croydon Bake House</span>
+      <span class="preloader__bar"></span>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar__inner">
+      <a href="#home" class="navbar__logo" aria-label="Croydon Bake House Home">
+        <span class="logo-wordmark">Croydon Bake House</span>
+      </a>
+      <button class="navbar__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="navbar__nav" id="navMenu" aria-label="Main navigation">
+        <a href="#enquire" class="nav-link">Enquire</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#products" class="nav-link">Products</a>
+        <a href="#gallery" class="nav-link">Gallery</a>
+        <a href="#blog" class="nav-link">Blog</a>
+        <a href="#contact" class="nav-link">Contact</a>
+        <a href="#enquire" class="btn btn--gold btn--sm nav-cta">Get a Quote</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero__overlay"></div>
+      <div class="hero__decor" aria-hidden="true">
+        <span class="hero__decor-circle c1"></span>
+        <span class="hero__decor-circle c2"></span>
+        <span class="hero__decor-circle c3"></span>
+      </div>
+      <div class="container hero__content">
+        <div class="hero__text reveal">
+          <!-- CHANGE 1: flat label, not pill -->
+          <div class="hero__badge">
+            <span class="hero__badge-bar"></span>
+            <span>Wholesale Bakery &nbsp;·&nbsp; Croydon, VIC</span>
+          </div>
+          <h1 class="hero__title">Freshly Baked.<br /><em>Delivered with Care.</em></h1>
+          <p class="hero__subtitle">We supply cafes, restaurants, and businesses across Melbourne's east with premium pies, slices, pastries and scrolls — baked fresh every day.</p>
+          <div class="hero__ctas">
+            <a href="#enquire" class="btn btn--gold btn--lg btn--shine">Wholesale Enquiry</a>
+            <a href="#products" class="btn btn--ghost btn--lg">View Products</a>
+          </div>
+        </div>
+      </div>
+      <div class="hero__scroll-hint" aria-hidden="true">
+        <span class="scroll-dot"></span>
+        <span class="scroll-dot"></span>
+        <span class="scroll-dot"></span>
+      </div>
+    </section>
+
+    <!-- ENQUIRY FORM -->
+    <section class="enquire" id="enquire">
+      <div class="enquire__blob" aria-hidden="true"></div>
+      <div class="container enquire__inner">
+        <div class="enquire__copy reveal">
+          <span class="section-label">Order &amp; Enquiry</span>
+          <h2 class="section-title">Let's Work Together</h2>
+          <p class="enquire__desc">Whether you're ordering for a special occasion or setting up a regular wholesale account — we'd love to work with you. We'll get back to you within one business day.</p>
+          <ul class="enquire__perks">
+            <li><i data-lucide="check-circle" aria-hidden="true"></i> Baked fresh from 6am daily</li>
+            <li><i data-lucide="check-circle" aria-hidden="true"></i> Flexible order quantities</li>
+            <li><i data-lucide="check-circle" aria-hidden="true"></i> Consistent quality, every time</li>
+            <li><i data-lucide="check-circle" aria-hidden="true"></i> Local Melbourne east delivery</li>
+          </ul>
+        </div>
+
+        <form class="enquire__form reveal" id="enquireForm" novalidate>
+
+          <!-- CHANGE 2: Customer type toggle -->
+          <div class="customer-type">
+            <p class="customer-type__label">I am enquiring as a…</p>
+            <div class="customer-type__options">
+              <label class="type-option">
+                <input type="radio" name="customerType" value="individual" id="typeIndividual" checked />
+                <span class="type-option__card">
+                  <i data-lucide="user" aria-hidden="true"></i>
+                  <strong>Individual</strong>
+                  <small>Bulk order for a party or event</small>
+                </span>
+              </label>
+              <label class="type-option">
+                <input type="radio" name="customerType" value="business" id="typeBusiness" />
+                <span class="type-option__card">
+                  <i data-lucide="building-2" aria-hidden="true"></i>
+                  <strong>Business</strong>
+                  <small>Wholesale / café / restaurant account</small>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First Name <span class="required" aria-hidden="true">*</span></label>
+              <input type="text" id="firstName" name="firstName" autocomplete="given-name" placeholder="Jane" required />
+              <span class="form-error" id="firstNameError" role="alert" aria-live="polite"></span>
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name <span class="required" aria-hidden="true">*</span></label>
+              <input type="text" id="lastName" name="lastName" autocomplete="family-name" placeholder="Smith" required />
+              <span class="form-error" id="lastNameError" role="alert" aria-live="polite"></span>
+            </div>
+          </div>
+
+          <!-- Business name: shown only for Business type -->
+          <div class="form-group" id="businessNameGroup" style="display:none;">
+            <label for="businessName">Business Name <span class="required" aria-hidden="true">*</span></label>
+            <input type="text" id="businessName" name="businessName" autocomplete="organization" placeholder="Your Café Pty Ltd" />
+            <span class="form-error" id="businessNameError" role="alert" aria-live="polite"></span>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email <span class="required" aria-hidden="true">*</span></label>
+              <input type="email" id="email" name="email" autocomplete="email" placeholder="jane@example.com.au" required />
+              <span class="form-error" id="emailError" role="alert" aria-live="polite"></span>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone <span class="required" aria-hidden="true">*</span></label>
+              <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="04XX XXX XXX" required />
+              <span class="form-error" id="phoneError" role="alert" aria-live="polite"></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="productInterest">Products of Interest</label>
+            <select id="productInterest" name="productInterest">
+              <option value="">Select a category…</option>
+              <option value="pies">Pies &amp; Pasties</option>
+              <option value="rolls">Sausage &amp; Spinach Rolls</option>
+              <option value="slices">Slices &amp; Lamingtons</option>
+              <option value="cakes">Cakes</option>
+              <option value="scrolls">Scrolls</option>
+              <option value="quiche">Quiche</option>
+              <option value="donuts">Donuts</option>
+              <option value="cookies">Cookies</option>
+              <option value="mixed">Mixed / Full Range</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="4" placeholder="Tell us about your order — quantity, occasion, delivery suburb…"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--full btn--shine" id="submitBtn">
+            <span class="btn-text">Send Enquiry</span>
+            <span class="btn-loading" hidden>Sending…</span>
+          </button>
+
+          <div class="form-success" id="formSuccess" hidden role="status" aria-live="polite">
+            <i data-lucide="check-circle-2" aria-hidden="true"></i>
+            <strong>Thank you!</strong> We'll be in touch within one business day.
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about" id="about">
+      <div class="about__bg-text" aria-hidden="true">BAKED</div>
+      <div class="container about__inner">
+        <div class="about__image-wrap reveal">
+          <div class="stacked-cards">
+            <div class="stacked-card stacked-card--left">
+              <img src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=600&h=780&fit=crop&q=80" alt="Fresh pies from Croydon Bake House" loading="lazy" />
+            </div>
+            <div class="stacked-card stacked-card--right">
+              <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=600&h=780&fit=crop&q=80" alt="Vanilla slice from Croydon Bake House" loading="lazy" />
+            </div>
+            <div class="stacked-card stacked-card--center">
+              <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&h=780&fit=crop&q=80" alt="Freshly baked goods at Croydon Bake House" loading="lazy" />
+              <div class="about__image-badge">
+                <span class="badge-number">5.0</span>
+                <span class="badge-label">★ Google Rating</span>
+              </div>
+              <div class="about__image-tag">Est. in Croydon, VIC</div>
+            </div>
+          </div>
+        </div>
+        <div class="about__copy reveal">
+          <span class="section-label">Who We Are</span>
+          <h2 class="section-title">A Neighbourhood Bakery.<br />Built on Quality.</h2>
+          <p>Croydon Bake House has been serving Melbourne's east with freshly baked goods from our kitchen on Main Street. What started as a beloved local bakery has grown into a trusted wholesale supplier for cafes, restaurants, and businesses across the region.</p>
+          <p>Every pie, slice, scroll and quiche is made in-house using quality ingredients — no shortcuts, no compromise. Our loyal customers keep coming back because they can taste the difference.</p>
+          <div class="about__stats">
+            <div class="stat">
+              <span class="stat__num"><span class="count-up" data-target="8">0</span>+</span>
+              <span class="stat__label">Product Categories</span>
+            </div>
+            <div class="stat">
+              <span class="stat__num"><span class="count-up" data-target="40">0</span>+</span>
+              <span class="stat__label">SKUs Available</span>
+            </div>
+            <div class="stat">
+              <span class="stat__num">6AM</span>
+              <span class="stat__label">Fresh Daily</span>
+            </div>
+          </div>
+          <a href="#enquire" class="btn btn--primary btn--shine">Start Your Enquiry</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCTS — CHANGE 3: Category cards + in-page drawer -->
+    <section class="products" id="products">
+      <div class="products__bg-strip" aria-hidden="true"></div>
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">Our Range</span>
+          <h2 class="section-title">Fresh from Our Kitchen</h2>
+          <p class="section-subtitle">Tap a category to browse what we bake. All products fresh daily — <a href="#enquire">contact us</a> for pricing and availability.</p>
+        </div>
+
+        <div class="category-grid" id="categoryGrid">
+          <button class="cat-card reveal" data-cat="pie" style="--delay:0ms" aria-expanded="false">
+            <div class="cat-card__img"><img src="images/Google/steak_cheese_pie.jpg" alt="" aria-hidden="true" loading="lazy" /></div>
+            <div class="cat-card__overlay"></div>
+            <div class="cat-card__body">
+              <h3>Pies &amp; Pasties</h3>
+              <span>11 varieties</span>
+              <span class="cat-card__chevron"><i data-lucide="chevron-down" aria-hidden="true"></i></span>
+            </div>
+          </button>
+
+          <button class="cat-card reveal" data-cat="roll" style="--delay:60ms" aria-expanded="false">
+            <div class="cat-card__img"><img src="images/Google/sausage_roll.jpg" alt="" aria-hidden="true" loading="lazy" /></div>
+            <div class="cat-card__overlay"></div>
+            <div class="cat-card__body">
+              <h3>Rolls</h3>
+              <span>2 varieties</span>
+              <span class="cat-card__chevron"><i data-lucide="chevron-down" aria-hidden="true"></i></span>
+            </div>
+          </button>
+
+          <button class="cat-card reveal" data-cat="slice" style="--delay:120ms" aria-expanded="false">
+            <div class="cat-card__img"><img src="images/Google/vanilla_slice.jpg" alt="" aria-hidden="true" loading="lazy" /></div>
+            <div class="cat-card__overlay"></div>
+            <div class="cat-card__body">
+              <h3>Slices</h3>
+              <span>11 varieties</span>
+              <span class="cat-card__chevron"><i data-lucide="chevron-down" aria-hidden="true"></i></span>
+            </div>
+          </button>
+
+          <button class="cat-card reveal" data-cat="cake" style="--delay:180ms" aria-expanded="false">
+            <div class="cat-card__img"><img src="images/Google/banana_cake.jpg" alt="" aria-hidden="true" loading="lazy" /></div>
+            <div class="cat-card__overlay"></div>
+            <div class="cat-card__body">
+              <h3>Cakes</h3>
+              <span>4 varieties</span>
+              <span class="cat-card__chevron"><i data-lucide="chevron-down" aria-hidden="true"></i></span>
+            </div>
+          </button>
+
+          <button class="cat-card reveal" data-cat="scroll" style="--delay:240ms" aria-expanded="false">
+            <div class="cat-card__img"><img src="images/Google/coffee_scroll.jpg" alt="" aria-hidden="true" loading="lazy" /></div>
+            <div class="cat-card__overlay"></div>
+            <div class="cat-card__body">
+              <h3>Scrolls</h3>
+              <span>3 varieties</span>
+              <span class="cat-card__chevron"><i data-lucide="chevron-down" aria-hidden="true"></i></span>
+            </div>
+          </button>
+
+          <button class="cat-card reveal" data-cat="quiche" style="--delay:300ms" aria-expanded="false">
+            <div class="cat-card__img"><img src="images/Google/egg_bacon_quiche.jpg" alt="" aria-hidden="true" loading="lazy" /></div>
+            <div class="cat-card__overlay"></div>
+            <div class="cat-card__body">
+              <h3>Quiche</h3>
+              <span>2 varieties</span>
+              <span class="cat-card__chevron"><i data-lucide="chevron-down" aria-hidden="true"></i></span>
+            </div>
+          </button>
+
+          <button class="cat-card reveal" data-cat="donut" style="--delay:360ms" aria-expanded="false">
+            <div class="cat-card__img"><img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=500&h=360&fit=crop&q=80" alt="" aria-hidden="true" loading="lazy" /></div>
+            <div class="cat-card__overlay"></div>
+            <div class="cat-card__body">
+              <h3>Donuts</h3>
+              <span>Varieties TBC</span>
+              <span class="cat-card__chevron"><i data-lucide="chevron-down" aria-hidden="true"></i></span>
+            </div>
+          </button>
+
+          <button class="cat-card reveal" data-cat="cookie" style="--delay:420ms" aria-expanded="false">
+            <div class="cat-card__img"><img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=500&h=360&fit=crop&q=80" alt="" aria-hidden="true" loading="lazy" /></div>
+            <div class="cat-card__overlay"></div>
+            <div class="cat-card__body">
+              <h3>Cookies</h3>
+              <span>Varieties TBC</span>
+              <span class="cat-card__chevron"><i data-lucide="chevron-down" aria-hidden="true"></i></span>
+            </div>
+          </button>
+        </div>
+
+        <!-- In-page product drawer -->
+        <div class="product-drawer" id="productDrawer">
+          <div class="product-drawer__header">
+            <h3 class="product-drawer__title" id="drawerTitle"></h3>
+            <button class="product-drawer__close" id="drawerClose" aria-label="Close product list">
+              <i data-lucide="x" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="product-grid" id="productGrid"></div>
+        </div>
+
+        <div class="products__cta reveal">
+          <p>Don't see what you're after? We can accommodate custom orders.</p>
+          <a href="#enquire" class="btn btn--gold btn--shine">Enquire About Custom Orders</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="gallery" id="gallery">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">Our Bakes</span>
+          <h2 class="section-title">From Our Kitchen</h2>
+          <p class="section-subtitle">Follow us on <a href="https://www.facebook.com/croydonbakehouse" target="_blank" rel="noopener noreferrer">Facebook</a> and <a href="https://www.instagram.com/croydonbakehouse/" target="_blank" rel="noopener noreferrer">Instagram</a> for daily updates.</p>
+        </div>
+        <div class="bento-grid">
+          <div class="bento-item bento-item--2x2 reveal" style="--delay:0ms" data-title="Fresh from the Oven" data-desc="Handcrafted baked goods made fresh every morning">
+            <img src="images/Faccebook/472209520_614400564437337_171300329878224338_n.jpg" alt="Fresh baked goods from Croydon Bake House" loading="lazy" />
+            <div class="bento-item__overlay"><div class="bento-item__info"><h3>Fresh from the Oven</h3><p>Handcrafted fresh every morning</p></div></div>
+          </div>
+          <div class="bento-item bento-item--1x2 reveal" style="--delay:60ms" data-title="Our Kitchen" data-desc="Every item made in-house with quality ingredients">
+            <img src="images/Faccebook/472276755_613906097820117_6489471636230370131_n.jpg" alt="Croydon Bake House kitchen creations" loading="lazy" />
+            <div class="bento-item__overlay"><div class="bento-item__info"><h3>Our Kitchen</h3><p>Made in-house, every day</p></div></div>
+          </div>
+          <div class="bento-item reveal" style="--delay:90ms" data-title="Baked Daily" data-desc="Warm from our oven every single morning">
+            <img src="images/Faccebook/472745866_615882104289183_1245264976695278782_n.jpg" alt="Daily baked goods at Croydon Bake House" loading="lazy" />
+            <div class="bento-item__overlay"><div class="bento-item__info"><h3>Baked Daily</h3><p>Warm from our oven every morning</p></div></div>
+          </div>
+          <div class="bento-item reveal" style="--delay:120ms" data-title="Quality Ingredients" data-desc="No shortcuts — quality in every bite">
+            <img src="images/Faccebook/470634693_602192772324783_5183989296729995826_n.jpg" alt="Quality baked goods from Croydon Bake House" loading="lazy" />
+            <div class="bento-item__overlay"><div class="bento-item__info"><h3>Quality Ingredients</h3><p>No shortcuts, every time</p></div></div>
+          </div>
+          <div class="bento-item bento-item--2x2 reveal" style="--delay:150ms" data-title="Croydon's Favourite" data-desc="Loved by locals and businesses across Melbourne's east">
+            <img src="images/Faccebook/470189758_599986329212094_4034607707299806881_n.jpg" alt="Croydon Bake House favourites" loading="lazy" />
+            <div class="bento-item__overlay"><div class="bento-item__info"><h3>Croydon's Favourite</h3><p>Loved across Melbourne's east</p></div></div>
+          </div>
+          <div class="bento-item bento-item--1x2 reveal" style="--delay:210ms" data-title="Wholesale Ready" data-desc="Fresh supply for cafes, restaurants and businesses">
+            <img src="images/Faccebook/484509851_688577053693190_2938101032001209328_n.jpg" alt="Wholesale baked goods from Croydon Bake House" loading="lazy" />
+            <div class="bento-item__overlay"><div class="bento-item__info"><h3>Wholesale Ready</h3><p>Fresh supply for your business</p></div></div>
+          </div>
+          <div class="bento-item reveal" style="--delay:270ms" data-title="Made with Care" data-desc="Every product crafted with care and attention">
+            <img src="images/Faccebook/484803765_688567750360787_5318546032055170835_n.jpg" alt="Croydon Bake House baked with care" loading="lazy" />
+            <div class="bento-item__overlay"><div class="bento-item__info"><h3>Made with Care</h3><p>Crafted with care and attention</p></div></div>
+          </div>
+          <div class="bento-item reveal" style="--delay:300ms" data-title="Our Signature Range" data-desc="Pies, slices, scrolls and more — all baked in-house">
+            <img src="images/Faccebook/470584863_600098525867541_182874329154716730_n.jpg" alt="Croydon Bake House signature range" loading="lazy" />
+            <div class="bento-item__overlay"><div class="bento-item__info"><h3>Our Signature Range</h3><p>Pies, slices, scrolls &amp; more</p></div></div>
+          </div>
+        </div>
+        <div class="gallery__cta reveal">
+          <a href="https://www.facebook.com/croydonbakehouse" target="_blank" rel="noopener noreferrer" class="btn btn--outline btn--shine">
+            <i data-lucide="facebook" aria-hidden="true"></i> View More on Facebook
+          </a>
+          <a href="https://www.instagram.com/croydonbakehouse/" target="_blank" rel="noopener noreferrer" class="btn btn--outline btn--shine">
+            <i data-lucide="instagram" aria-hidden="true"></i> Follow on Instagram
+          </a>
+        </div>
+      </div>
+
+      <!-- Bento Modal -->
+      <div class="bento-modal" id="bentoModal" role="dialog" aria-modal="true" aria-label="Image viewer">
+        <div class="bento-modal__backdrop" id="bentoBackdrop"></div>
+        <button class="bento-modal__close" id="bentoClose" aria-label="Close"><i data-lucide="x" aria-hidden="true"></i></button>
+        <div class="bento-modal__content">
+          <div class="bento-modal__img-wrap">
+            <img src="" alt="" id="bentoModalImg" />
+            <div class="bento-modal__img-info">
+              <h3 id="bentoModalTitle"></h3>
+              <p id="bentoModalDesc"></p>
+            </div>
+          </div>
+        </div>
+        <div class="bento-dock" id="bentoDock">
+          <div class="bento-dock__inner" id="bentoDockInner"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOG -->
+    <section class="blog" id="blog">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">Latest News</span>
+          <h2 class="section-title">From the Bakehouse</h2>
+          <p class="section-subtitle">Tips, stories, and updates from our kitchen.</p>
+        </div>
+        <div class="blog-grid">
+          <article class="blog-card reveal" style="--delay:0ms">
+            <div class="blog-card__img-wrap"><img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&h=380&fit=crop&q=80" alt="Baker preparing dough" loading="lazy" /><span class="blog-card__category">Wholesale Tips</span></div>
+            <div class="blog-card__body"><time class="blog-card__date" datetime="2026-03-15">March 15, 2026</time><h3><a href="#">How to Choose the Right Bakery Supplier for Your Café</a></h3><p>Selecting a reliable wholesale bakery partner is one of the most important decisions a café owner makes. Here's what to look for…</p><a href="#" class="read-more">Read More <i data-lucide="arrow-right" aria-hidden="true"></i></a></div>
+          </article>
+          <article class="blog-card reveal" style="--delay:100ms">
+            <div class="blog-card__img-wrap"><img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=600&h=380&fit=crop&q=80" alt="Vanilla slice" loading="lazy" /><span class="blog-card__category">Behind the Scenes</span></div>
+            <div class="blog-card__body"><time class="blog-card__date" datetime="2026-03-01">March 1, 2026</time><h3><a href="#">Why Our Vanilla Slice Has a Cult Following in Croydon</a></h3><p>It starts with real custard, real pastry, and a recipe we've quietly perfected. Here's the story behind our most requested product…</p><a href="#" class="read-more">Read More <i data-lucide="arrow-right" aria-hidden="true"></i></a></div>
+          </article>
+          <article class="blog-card reveal" style="--delay:200ms">
+            <div class="blog-card__img-wrap"><img src="https://images.unsplash.com/photo-1586985289906-406988974504?w=600&h=380&fit=crop&q=80" alt="Sausage rolls" loading="lazy" /><span class="blog-card__category">Seasonal</span></div>
+            <div class="blog-card__body"><time class="blog-card__date" datetime="2026-02-14">February 14, 2026</time><h3><a href="#">New Autumn Menu: Butter Chicken Pie &amp; More</a></h3><p>As the weather cools, we're introducing comforting new flavours to our wholesale range. Say hello to our butter chicken pie and seasonal specials…</p><a href="#" class="read-more">Read More <i data-lucide="arrow-right" aria-hidden="true"></i></a></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- REVIEWS CAROUSEL -->
+    <section class="reviews" id="reviews">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">What Our Customers Say</span>
+          <h2 class="section-title">Loved by the Community</h2>
+          <div class="reviews__google-badge">
+            <span class="reviews__stars">★★★★★</span>
+            <span class="reviews__score">5.0 on Google Reviews</span>
+          </div>
+        </div>
+
+        <div class="reviews-carousel">
+          <div class="reviews-viewport">
+            <div class="reviews-track" id="reviewsTrack">
+
+              <div class="review-card">
+                <div class="review-card__header">
+                  <div class="review-card__avatar" style="background:#C8913A;">J</div>
+                  <div>
+                    <strong class="review-card__name">Jenny Duncan</strong>
+                    <span class="review-card__meta">Local Guide · 48 reviews · 5 months ago</span>
+                  </div>
+                </div>
+                <div class="review-card__stars">★★★★★</div>
+                <p class="review-card__text">An absolute Gem in Croydon. Unpretentious, Classic, Old School Bakery. Polite, friendly service. Such tasty and filling baked goods. You can create your own sandwiches too. Loads of choices. Very good coffee. Highly recommend. Many thanks for a great lunch!</p>
+              </div>
+
+              <div class="review-card">
+                <div class="review-card__header">
+                  <div class="review-card__avatar" style="background:#C4512A;">T</div>
+                  <div>
+                    <strong class="review-card__name">Taylah Collins</strong>
+                    <span class="review-card__meta">Local Guide · 15 reviews · 6 years ago</span>
+                  </div>
+                </div>
+                <div class="review-card__stars">★★★★★</div>
+                <p class="review-card__text">Apple and cinnamon scrolls are to die for! Been going religiously to Croydon Bakehouse for almost 10 years for the 1 item. Never failed to disappoint once. Price has barely changed but the taste has always been 10/10. Wouldn't pick another bakery for sweets.</p>
+              </div>
+
+              <div class="review-card">
+                <div class="review-card__header">
+                  <div class="review-card__avatar" style="background:#2C6B8A;">N</div>
+                  <div>
+                    <strong class="review-card__name">Navneet Kaur</strong>
+                    <span class="review-card__meta">2 reviews · 4 months ago</span>
+                  </div>
+                </div>
+                <div class="review-card__stars">★★★★★</div>
+                <p class="review-card__text">Delicious Spinach &amp; Ricotta Roll! I tried the spinach and ricotta roll at Croydon Bakehouse and it was absolutely delicious. Pastry was flaky, generous filling. You can tell it's made fresh. The staff were friendly and welcoming too. Definitely one of the best savoury rolls I've had in a long time!</p>
+                <span class="review-card__tag">Food: 5/5 · Service: 5/5 · Atmosphere: 5/5</span>
+              </div>
+
+              <div class="review-card">
+                <div class="review-card__header">
+                  <div class="review-card__avatar" style="background:#2C1208;">林</div>
+                  <div>
+                    <strong class="review-card__name">林祖华</strong>
+                    <span class="review-card__meta">1 review · 3 months ago</span>
+                  </div>
+                </div>
+                <div class="review-card__stars">★★★★★</div>
+                <p class="review-card__text">Croydon Bakehouse never disappoints! Their crispy pork banh mi is incredible — the crackling is perfectly crunchy, the pork is flavorful, and the pickled veggies give it the perfect balance. Fresh baguette, great portions, and friendly service. Highly recommend!</p>
+                <span class="review-card__tag">Food: 5/5 · Service: 5/5 · Atmosphere: 5/5</span>
+              </div>
+
+              <div class="review-card">
+                <div class="review-card__header">
+                  <div class="review-card__avatar" style="background:#4A7C3F;">L</div>
+                  <div>
+                    <strong class="review-card__name">Ling Li</strong>
+                    <span class="review-card__meta">3 reviews · 4 months ago</span>
+                  </div>
+                </div>
+                <div class="review-card__stars">★★★★★</div>
+                <p class="review-card__text">Excellent Service and Care at Croydon Bakehouse! The staff were incredibly friendly. What really stood out was how kind and attentive they were towards elderly customers — taking the time to chat, help with orders, and make everyone feel welcome. The food was delicious too!</p>
+                <span class="review-card__tag">Food: 5/5 · Service: 5/5 · Atmosphere: 5/5</span>
+              </div>
+
+              <div class="review-card">
+                <div class="review-card__header">
+                  <div class="review-card__avatar" style="background:#8B4513;">M</div>
+                  <div>
+                    <strong class="review-card__name">MasterXdatoy</strong>
+                    <span class="review-card__meta">5 reviews · a month ago</span>
+                  </div>
+                </div>
+                <div class="review-card__stars">★★★★★</div>
+                <p class="review-card__text">Easily the best banh mi's I have tried. The pork is cut fresh so it's still nice and juicy. The portions are generous with the pork being cut into large cubes. The crackling had a perfect texture and all around tastes so good.</p>
+                <span class="review-card__tag">Food: 5/5 · Service: 5/5 · Atmosphere: 5/5</span>
+              </div>
+
+              <div class="review-card">
+                <div class="review-card__header">
+                  <div class="review-card__avatar" style="background:#6B4226;">C</div>
+                  <div>
+                    <strong class="review-card__name">Chantelle Dye</strong>
+                    <span class="review-card__meta">Local Guide · 40 reviews · 11 months ago</span>
+                  </div>
+                </div>
+                <div class="review-card__stars">★★★★★</div>
+                <p class="review-card__text">Best bakery in area. Friendly, prompt service with plenty of staff who are helpful. So fresh and delicious food made to order. Best schnitzel roll I ever had! Yum!</p>
+                <span class="review-card__tag">Food: 5/5 · Service: 5/5 · Atmosphere: 3/5</span>
+              </div>
+
+              <div class="review-card">
+                <div class="review-card__header">
+                  <div class="review-card__avatar" style="background:#7A3B6E;">V</div>
+                  <div>
+                    <strong class="review-card__name">Veerpal Kaur</strong>
+                    <span class="review-card__meta">4 reviews · 7 months ago</span>
+                  </div>
+                </div>
+                <div class="review-card__stars">★★★★★</div>
+                <p class="review-card__text">I must say best banh mi roll and the lady was prepared — that area is fully cleaned and looks so hygienic. Great experience every time.</p>
+                <span class="review-card__tag">Dine in · $20–40</span>
+              </div>
+
+            </div>
+          </div>
+          <button class="reviews-btn reviews-btn--prev" id="reviewsPrev" aria-label="Previous review">
+            <i data-lucide="chevron-left" aria-hidden="true"></i>
+          </button>
+          <button class="reviews-btn reviews-btn--next" id="reviewsNext" aria-label="Next review">
+            <i data-lucide="chevron-right" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="reviews-dots" id="reviewsDots"></div>
+
+        <div class="reviews__cta reveal">
+          <a href="https://g.page/r/croydonbakehouse/review" target="_blank" rel="noopener noreferrer" class="btn btn--outline btn--shine">
+            <i data-lucide="star" aria-hidden="true"></i> Leave Us a Review
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT + MAP -->
+    <section class="contact" id="contact">
+      <div class="container contact__inner">
+        <div class="contact__info reveal">
+          <span class="section-label">Get in Touch</span>
+          <h2 class="section-title">Find Us</h2>
+          <ul class="contact__details">
+            <li><i data-lucide="map-pin" aria-hidden="true"></i><div><strong>Address</strong><span>150 Main Street, Croydon VIC 3136</span></div></li>
+            <li><i data-lucide="phone" aria-hidden="true"></i><div><strong>Phone</strong><a href="tel:0397253161">03 9725 3161</a></div></li>
+            <li><i data-lucide="clock" aria-hidden="true"></i><div><strong>Trading Hours</strong><span>Mon – Sat: 6:00 AM – 5:30 PM</span><span>Sunday: 7:00 AM – 3:00 PM</span></div></li>
+            <li><i data-lucide="facebook" aria-hidden="true"></i><div><strong>Facebook</strong><a href="https://www.facebook.com/croydonbakehouse" target="_blank" rel="noopener noreferrer">@croydonbakehouse</a></div></li>
+            <li><i data-lucide="instagram" aria-hidden="true"></i><div><strong>Instagram</strong><a href="https://www.instagram.com/croydonbakehouse/" target="_blank" rel="noopener noreferrer">@croydonbakehouse</a></div></li>
+          </ul>
+          <a href="#enquire" class="btn btn--primary btn--shine">Make a Wholesale Enquiry</a>
+        </div>
+        <div class="contact__map reveal">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3147.384!2d145.2788!3d-37.7974!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad63a9ab484f1a5%3A0x32af326d9aa37c65!2sCroydon+Bake+House!5e0!3m2!1sen!2sau!4v1710000000000!5m2!1sen!2sau" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Croydon Bake House on Google Maps"></iframe>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <span class="logo-wordmark logo-wordmark--lg">Croydon Bake House</span>
+        <p>Premium wholesale bakery in Croydon, VIC. Supplying cafes, restaurants and businesses across Melbourne's east.</p>
+        <a href="https://www.facebook.com/croydonbakehouse" target="_blank" rel="noopener noreferrer" class="footer__social" aria-label="Facebook"><i data-lucide="facebook" aria-hidden="true"></i></a>
+        <a href="https://www.instagram.com/croydonbakehouse/" target="_blank" rel="noopener noreferrer" class="footer__social" aria-label="Instagram"><i data-lucide="instagram" aria-hidden="true"></i></a>
+      </div>
+      <div class="footer__links"><h4>Navigation</h4><ul><li><a href="#enquire">Wholesale Enquiry</a></li><li><a href="#about">About Us</a></li><li><a href="#products">Products</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#blog">Blog</a></li><li><a href="#contact">Contact</a></li></ul></div>
+      <div class="footer__links"><h4>Products</h4><ul><li><a href="#products">Pies &amp; Pasties</a></li><li><a href="#products">Sausage Rolls</a></li><li><a href="#products">Slices &amp; Lamingtons</a></li><li><a href="#products">Cakes</a></li><li><a href="#products">Scrolls</a></li><li><a href="#products">Quiche</a></li></ul></div>
+      <div class="footer__contact"><h4>Contact</h4><p>150 Main Street<br />Croydon VIC 3136</p><a href="tel:0397253161">03 9725 3161</a><p class="footer__hours">Mon–Sat: 6:00 AM – 5:30 PM<br />Sun: 7:00 AM – 3:00 PM</p></div>
+    </div>
+    <div class="footer__bottom"><div class="container"><p>&copy; <span id="footerYear"></span> Croydon Bake House. All rights reserved.</p><p>150 Main Street, Croydon VIC 3136 · 03 9725 3161</p></div></div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to top"><i data-lucide="chevron-up" aria-hidden="true"></i></button>
+  <script src="script.js"></script>
+</body>
+</html>
