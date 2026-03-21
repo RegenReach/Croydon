@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Learn how to bake a classic Aussie meat pie from scratch. Step-by-step recipe covering shortcrust pastry, rich beef filling, and tips for a golden finish." />
+  <title>How to Bake a Classic Aussie Meat Pie from Scratch | Croydon Bake House</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── Blog Post Layout ─────────────────── */
+    .post-hero {
+      position: relative;
+      height: 420px;
+      background: url('images/Google/steak_cheese_pie.jpg') center/cover no-repeat;
+    }
+    .post-hero__overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(44,18,8,0.5) 0%, rgba(44,18,8,0.84) 100%);
+    }
+    .post-hero__content {
+      position: relative; z-index: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 3rem;
+    }
+    .post-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 1rem;
+    }
+    .post-breadcrumb a { color: rgba(255,255,255,0.65); transition: color 180ms; }
+    .post-breadcrumb a:hover { color: var(--color-gold-light); }
+    .post-breadcrumb span { color: rgba(255,255,255,0.35); }
+    .post-hero__category {
+      display: inline-block;
+      font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em;
+      background: var(--color-terracotta);
+      color: var(--color-white);
+      padding: 0.3rem 0.85rem;
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.85rem;
+    }
+    .post-hero__title {
+      color: var(--color-white);
+      font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+      max-width: 720px;
+      line-height: 1.25;
+      margin-bottom: 0.85rem;
+    }
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+      flex-wrap: wrap;
+    }
+    .post-meta span { display: flex; align-items: center; gap: 0.35rem; }
+
+    /* Article body */
+    .post-body {
+      padding: 4rem 0 5rem;
+      background: var(--color-bg);
+    }
+    .post-layout {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    .post-content { font-size: 1rem; line-height: 1.8; color: var(--color-text-muted); }
+    .post-content h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.2rem, 2.5vw, 1.55rem);
+      color: var(--color-primary);
+      margin: 2.5rem 0 0.9rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 2px solid var(--color-cream-dark);
+    }
+    .post-content h3 {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      color: var(--color-primary);
+      margin: 1.75rem 0 0.6rem;
+    }
+    .post-content p { margin-bottom: 1.25rem; color: var(--color-text-muted); }
+    .post-content p:first-child { font-size: 1.08rem; color: var(--color-text); line-height: 1.85; }
+    .post-content ul, .post-content ol {
+      margin: 0.75rem 0 1.25rem 1.25rem;
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .post-content ul li { list-style: disc; }
+    .post-content ol li { list-style: decimal; }
+    .post-content strong { color: var(--color-text); font-weight: 700; }
+    .post-content a { color: var(--color-gold); text-decoration: underline; }
+    .post-content a:hover { color: var(--color-terracotta); }
+
+    /* Recipe card */
+    .recipe-card {
+      background: var(--color-white);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: var(--shadow-card);
+    }
+    .recipe-card__title {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      color: var(--color-primary);
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--color-cream-dark);
+    }
+    .recipe-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+    .recipe-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+    .recipe-meta-item span:first-child {
+      font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--color-gold);
+    }
+    .recipe-meta-item span:last-child {
+      font-size: 0.95rem; font-weight: 700; color: var(--color-text);
+    }
+
+    .ingredient-group { margin-bottom: 1.25rem; }
+    .ingredient-group h4 {
+      font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--color-text-muted); margin-bottom: 0.5rem;
+    }
+    .ingredient-group ul { margin-left: 1rem; }
+    .ingredient-group ul li { list-style: disc; font-size: 0.92rem; padding: 0.15rem 0; }
+
+    .tip-box {
+      background: var(--color-cream);
+      border-left: 4px solid var(--color-gold);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      padding: 1.25rem 1.5rem;
+      margin: 1.75rem 0;
+    }
+    .tip-box strong { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-gold); margin-bottom: 0.4rem; }
+    .tip-box p { margin: 0; font-size: 0.92rem; }
+
+    .step-list { counter-reset: step-counter; margin-left: 0 !important; list-style: none !important; }
+    .step-list li {
+      list-style: none !important;
+      counter-increment: step-counter;
+      position: relative;
+      padding: 0.9rem 0 0.9rem 3.5rem;
+      border-bottom: 1px solid var(--color-border);
+      font-size: 0.95rem;
+    }
+    .step-list li:last-child { border-bottom: none; }
+    .step-list li::before {
+      content: counter(step-counter);
+      position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+      width: 2rem; height: 2rem;
+      background: var(--color-primary);
+      color: var(--color-white);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.8rem;
+      font-family: var(--font-body);
+    }
+
+    .post-cta {
+      background: linear-gradient(135deg, var(--color-primary) 0%, #4A1F10 100%);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      margin-top: 3rem;
+    }
+    .post-cta h3 { color: var(--color-white); font-size: 1.3rem; margin-bottom: 0.6rem; }
+    .post-cta p { color: rgba(255,255,255,0.75); font-size: 0.95rem; margin-bottom: 1.5rem; }
+
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      color: var(--color-gold); font-size: 0.88rem; font-weight: 700;
+      margin-bottom: 2rem;
+      transition: gap 200ms;
+    }
+    .back-link:hover { gap: 0.7rem; }
+    .back-link svg { width: 16px; height: 16px; }
+
+    .post-cta .btn {
+      color: #ffffff !important;
+      transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1), padding 300ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 300ms ease;
+    }
+    .post-cta .btn:hover {
+      transform: scale(1.14) !important;
+      padding: 1.1rem 3.25rem !important;
+      box-shadow: 0 14px 44px rgba(200,145,58,0.5) !important;
+    }
+
+    @media (min-width: 1024px) {
+      .post-hero { height: 500px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar__inner">
+      <a href="index.html" class="navbar__logo" aria-label="Croydon Bake House Home">
+        <span class="logo-wordmark">Croydon Bake House</span>
+      </a>
+      <button class="navbar__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="navbar__nav" id="navMenu" aria-label="Main navigation">
+        <a href="index.html#enquire" class="nav-link">Enquire</a>
+        <a href="index.html#about" class="nav-link">About</a>
+        <a href="index.html#products" class="nav-link">Products</a>
+        <a href="index.html#gallery" class="nav-link">Gallery</a>
+        <a href="index.html#blog" class="nav-link active">Blog</a>
+        <a href="index.html#contact" class="nav-link">Contact</a>
+        <a href="index.html#enquire" class="btn btn--gold btn--sm nav-cta">Get a Quote</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- POST HERO -->
+    <section class="post-hero">
+      <div class="post-hero__overlay"></div>
+      <div class="container post-hero__content">
+        <div class="post-breadcrumb">
+          <a href="index.html">Home</a>
+          <span>/</span>
+          <a href="index.html#blog">Blog</a>
+          <span>/</span>
+          <span>Recipes</span>
+        </div>
+        <span class="post-hero__category">Recipe</span>
+        <h1 class="post-hero__title">How to Bake a Classic Aussie Meat Pie from Scratch</h1>
+        <div class="post-meta">
+          <span><i data-lucide="calendar" aria-hidden="true"></i> March 1, 2026</span>
+          <span><i data-lucide="clock" aria-hidden="true"></i> 8 min read</span>
+          <span><i data-lucide="user" aria-hidden="true"></i> Croydon Bake House</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARTICLE BODY -->
+    <div class="post-body">
+      <div class="container">
+        <div class="post-layout">
+          <article class="post-content">
+
+            <a href="index.html#blog" class="back-link">
+              <i data-lucide="arrow-left" aria-hidden="true"></i> Back to Blog
+            </a>
+
+            <p>There is something deeply satisfying about pulling a golden meat pie out of the oven. The pastry cracks when you press it. The filling steams up. The whole kitchen smells like a proper Australian bakery. It is one of those things you cannot replicate from a supermarket freezer, no matter how convincing the packaging looks.</p>
+
+            <p>We bake hundreds of pies every morning at Croydon Bake House, and we have picked up a few things along the way. This recipe is our guide to making a classic beef pie at home. It is not complicated, but there are a handful of steps where the details really matter. We will flag those as we go.</p>
+
+            <!-- RECIPE CARD -->
+            <div class="recipe-card">
+              <p class="recipe-card__title">Classic Aussie Meat Pie</p>
+              <div class="recipe-meta-row">
+                <div class="recipe-meta-item">
+                  <span>Prep time</span>
+                  <span>30 min</span>
+                </div>
+                <div class="recipe-meta-item">
+                  <span>Cook time</span>
+                  <span>1 hr 20 min</span>
+                </div>
+                <div class="recipe-meta-item">
+                  <span>Makes</span>
+                  <span>6 individual pies</span>
+                </div>
+                <div class="recipe-meta-item">
+                  <span>Difficulty</span>
+                  <span>Moderate</span>
+                </div>
+              </div>
+
+              <div class="ingredient-group">
+                <h4>For the Beef Filling</h4>
+                <ul>
+                  <li>600g beef mince (not too lean, 80/20 fat ratio works well)</li>
+                  <li>1 brown onion, finely diced</li>
+                  <li>2 cloves garlic, minced</li>
+                  <li>2 tbsp tomato paste</li>
+                  <li>1 tbsp Worcestershire sauce</li>
+                  <li>1 cup beef stock</li>
+                  <li>2 tbsp plain flour</li>
+                  <li>Salt and black pepper to taste</li>
+                  <li>1 tbsp olive oil</li>
+                </ul>
+              </div>
+
+              <div class="ingredient-group">
+                <h4>For the Shortcrust Base</h4>
+                <ul>
+                  <li>250g plain flour</li>
+                  <li>125g cold butter, cubed</li>
+                  <li>1 egg yolk</li>
+                  <li>2 to 3 tbsp cold water</li>
+                  <li>Pinch of salt</li>
+                </ul>
+              </div>
+
+              <div class="ingredient-group">
+                <h4>For the Lid</h4>
+                <ul>
+                  <li>2 sheets ready-rolled puff pastry (store-bought is fine)</li>
+                  <li>1 egg, beaten (for egg wash)</li>
+                </ul>
+              </div>
+            </div>
+
+            <h2>Making the Filling</h2>
+
+            <p>The filling is where a lot of home bakers go wrong. They rush it. Mince that is cooked and seasoned in ten minutes tastes like it was cooked in ten minutes. You need time for the liquid to reduce and the flavours to come together properly.</p>
+
+            <ol class="step-list">
+              <li>Heat olive oil in a heavy-based pan over medium heat. Add the onion and cook for 6 to 8 minutes until soft and just starting to colour. Add the garlic and cook for another minute.</li>
+              <li>Turn the heat up to medium-high. Add the mince in batches, breaking it up with a wooden spoon. Do not crowd the pan or it will steam instead of brown. Brown each batch before adding the next.</li>
+              <li>Return all the mince to the pan. Add the flour and stir well to coat, cooking for 2 minutes. This helps thicken the filling later without making it gluey.</li>
+              <li>Add the tomato paste and Worcestershire sauce. Stir to combine, then pour in the beef stock.</li>
+              <li>Reduce the heat to low. Simmer uncovered for 30 to 40 minutes, stirring occasionally, until the filling is thick and saucy. It should hold its shape when you spoon it, not run across the plate. Season well with salt and pepper.</li>
+              <li>Spread the filling onto a tray and refrigerate until completely cold. Do not skip this step. Hot filling in a pastry case will make the base soggy and the pastry will not cook properly.</li>
+            </ol>
+
+            <div class="tip-box">
+              <strong>Baker's note</strong>
+              <p>The filling can be made the day before and stored in the fridge overnight. It actually tastes better the next day once the flavours have had time to develop.</p>
+            </div>
+
+            <h2>Making the Shortcrust Base</h2>
+
+            <p>You can use store-bought shortcrust for the base if you are short on time, and it will still produce a decent result. But making it from scratch gives you better control over the thickness and texture, and it is not difficult.</p>
+
+            <ol class="step-list">
+              <li>Sift the flour and salt into a large bowl. Add the cold butter cubes. Using your fingertips, rub the butter into the flour until the mixture resembles coarse breadcrumbs. Work quickly so the butter stays cold.</li>
+              <li>Make a well in the centre. Add the egg yolk and 2 tablespoons of cold water. Mix with a flat-bladed knife until the dough just comes together, adding the extra water if needed. Do not overwork it.</li>
+              <li>Shape into a disc, wrap in plastic wrap and refrigerate for at least 30 minutes.</li>
+            </ol>
+
+            <div class="tip-box">
+              <strong>Why cold butter matters</strong>
+              <p>Cold butter creates small pockets of fat in the dough. When those hit the oven heat, they release steam and create the flaky texture you want. Warm butter blends in too fully and the pastry ends up tough.</p>
+            </div>
+
+            <h2>Assembling and Baking the Pies</h2>
+
+            <ol class="step-list">
+              <li>Preheat your oven to 200°C (180°C fan-forced). Grease 6 individual pie tins, roughly 10cm wide.</li>
+              <li>Roll the chilled shortcrust pastry to about 3mm thick on a lightly floured surface. Cut circles slightly larger than your tins and press them in carefully, making sure the pastry goes up the sides. Trim any excess.</li>
+              <li>Blind bake the bases for 10 minutes. To do this, line each base with baking paper and fill with rice or baking weights. This stops the base from puffing up before the filling goes in. Remove the weights and paper, then bake for a further 5 minutes until just starting to colour.</li>
+              <li>Spoon the cold filling into each case, filling to just below the rim. Do not overfill or the lid will lift and crack when it bakes.</li>
+              <li>Cut puff pastry lids to fit. Press the edges down firmly and crimp with a fork to seal. Brush with egg wash and cut a small steam vent in the centre of each lid.</li>
+              <li>Bake for 20 to 25 minutes until the pastry is deep golden and the filling is bubbling through the vent. Leave to rest in the tins for 5 minutes before turning out.</li>
+            </ol>
+
+            <h2>Tips for Getting It Right</h2>
+
+            <ul>
+              <li><strong>Use cold filling.</strong> Warm filling is the number one reason home-baked pies end up with a soggy base.</li>
+              <li><strong>Do not skip blind baking.</strong> That short pre-bake gives the base a head start so it does not go soft under the weight of the filling.</li>
+              <li><strong>Rest the pastry.</strong> Chilling the shortcrust before rolling relaxes the gluten and stops it from shrinking in the tin.</li>
+              <li><strong>Go generous with seasoning.</strong> Pie filling needs more salt than you think. Taste it before it goes cold and adjust.</li>
+              <li><strong>Use full-fat beef mince.</strong> Lean mince dries out and goes grainy. A bit of fat keeps the filling moist and flavourful.</li>
+            </ul>
+
+            <h2>Variations Worth Trying</h2>
+
+            <p>Once you have the base recipe sorted, there is a lot of room to experiment. At the bakehouse we make steak and cheese, pepper beef, butter chicken, shepherd's pie and more. The method is largely the same. The flavour profile is where you can have fun.</p>
+
+            <ul>
+              <li><strong>Steak and cheese:</strong> Use diced chuck steak instead of mince, braise it low and slow for an hour, then top the filling with a layer of grated cheddar before putting the lid on.</li>
+              <li><strong>Pepper beef:</strong> Add 1 to 2 teaspoons of cracked black pepper and a tablespoon of dijon mustard to the basic filling. It sounds simple but the result is genuinely different.</li>
+              <li><strong>Butter chicken:</strong> Replace the beef with diced chicken thigh and use a butter chicken sauce instead of the stock base. This one always sells out first at the bakehouse.</li>
+            </ul>
+
+            <p>Baking a good pie takes a bit of time and a bit of patience, but it is one of the most satisfying things you can make at home. If you want to try the real thing before you get baking, you know where to find us.</p>
+
+            <div class="post-cta">
+              <h3>Want Freshly Baked Pies Without the Effort?</h3>
+              <p>We bake over a dozen pie varieties every morning at Croydon Bake House. Ask us about wholesale pricing for your café or event.</p>
+              <a href="index.html#enquire" class="btn btn--gold btn--shine">Get in Touch</a>
+            </div>
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <span class="logo-wordmark logo-wordmark--lg">Croydon Bake House</span>
+        <p>Premium wholesale bakery in Croydon, VIC. Supplying cafes, restaurants and businesses across Melbourne's east.</p>
+        <a href="https://www.facebook.com/croydonbakehouse" target="_blank" rel="noopener noreferrer" class="footer__social" aria-label="Facebook"><i data-lucide="facebook" aria-hidden="true"></i></a>
+        <a href="https://www.instagram.com/croydonbakehouse/" target="_blank" rel="noopener noreferrer" class="footer__social" aria-label="Instagram"><i data-lucide="instagram" aria-hidden="true"></i></a>
+      </div>
+      <div class="footer__links"><h4>Navigation</h4><ul><li><a href="index.html#enquire">Wholesale Enquiry</a></li><li><a href="index.html#about">About Us</a></li><li><a href="index.html#products">Products</a></li><li><a href="index.html#gallery">Gallery</a></li><li><a href="index.html#blog">Blog</a></li><li><a href="index.html#contact">Contact</a></li></ul></div>
+      <div class="footer__links"><h4>From the Blog</h4><ul><li><a href="blog-bakery-supplier.html">Choosing a Bakery Supplier</a></li><li><a href="blog-pie-recipe.html">How to Bake a Classic Pie</a></li><li><a href="blog-sausage-rolls.html">Perfect Sausage Rolls</a></li></ul></div>
+      <div class="footer__contact"><h4>Contact</h4><p>150 Main Street<br />Croydon VIC 3136</p><a href="tel:0397253161">03 9725 3161</a><p class="footer__hours">Mon–Sat: 6:00 AM – 5:30 PM<br />Sun: 7:00 AM – 3:00 PM</p></div>
+    </div>
+    <div class="footer__bottom"><div class="container"><p>&copy; <span id="footerYear"></span> Croydon Bake House. All rights reserved.</p><p>150 Main Street, Croydon VIC 3136 · 03 9725 3161</p></div></div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to top"><i data-lucide="chevron-up" aria-hidden="true"></i></button>
+  <script src="script.js"></script>
+</body>
+</html>

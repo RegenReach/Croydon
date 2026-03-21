@@ -38,8 +38,8 @@ const PRODUCTS = {
       { name: 'Rocky Road Slice',       img: 'images/Google/rocky_road_slice.jpg',       tag: 'Slice' },
       { name: 'Peppermint Slice',       img: 'images/Google/peppermint_slice.png',       tag: 'Slice' },
       { name: 'Cherry Ripe Slice',      img: 'images/Google/cherry_ripe_slice.png',      tag: 'Slice' },
-      { name: 'Lamingtons — Chocolate', img: 'images/Google/lamingtons_chocolate.jpg',   tag: 'Slice' },
-      { name: 'Lamingtons — Strawberry',img: 'images/Google/lamingtons_strawberry.jpg',  tag: 'Slice' },
+      { name: 'Chocolate Lamingtons', img: 'images/Google/lamingtons_chocolate.jpg',   tag: 'Slice' },
+      { name: 'Strawberry Lamingtons',img: 'images/Google/lamingtons_strawberry.jpg',  tag: 'Slice' },
     ]
   },
   cake: {
@@ -69,13 +69,13 @@ const PRODUCTS = {
   donut: {
     label: 'Donuts',
     items: [
-      { name: 'Fresh Donuts', img: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=400&h=300&fit=crop&q=80', tag: 'TBC', note: 'Varieties coming soon — enquire for details.' },
+      { name: 'Fresh Donuts', img: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=400&h=300&fit=crop&q=80', tag: 'TBC', note: 'Varieties coming soon. Enquire for details.' },
     ]
   },
   cookie: {
     label: 'Cookies',
     items: [
-      { name: 'Fresh Cookies', img: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400&h=300&fit=crop&q=80', tag: 'TBC', note: 'Varieties coming soon — enquire for details.' },
+      { name: 'Fresh Cookies', img: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400&h=300&fit=crop&q=80', tag: 'TBC', note: 'Varieties coming soon. Enquire for details.' },
     ]
   },
 };
@@ -101,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initBentoGallery();
   initReviewsCarousel();
   initEnquiryForm();
+  initCartBadge();
 });
 
 /* ── Preloader ───────────────────────────── */
@@ -238,7 +239,7 @@ function initCustomerTypeToggle() {
   const messageField    = document.getElementById('message');
 
   const placeholders = {
-    individual: 'Tell us about your order — quantity, occasion, delivery suburb…',
+    individual: 'Tell us about your order: quantity, occasion, delivery suburb…',
     business:   'Tell us about your weekly volume needs, delivery location, and any specific requirements…',
   };
 
@@ -278,12 +279,30 @@ function initCategoryDrawer() {
         <div class="product-card__body">
           <h3>${item.name}</h3>
           <span class="product-tag ${item.tag === 'TBC' ? 'product-tag--coming' : ''}">${item.tag}</span>
+          <button class="product-card__add" data-name="${item.name}" data-img="${item.img}" data-cat="${data.label}" aria-label="Add ${item.name} to cart">
+            <i data-lucide="shopping-cart" aria-hidden="true"></i> Add to Cart
+          </button>
         </div>
       </div>
     `).join('');
 
     // Re-init Lucide
     if (typeof lucide !== 'undefined') lucide.createIcons();
+
+    // Bind add-to-cart buttons
+    grid.querySelectorAll('.product-card__add').forEach(btn => {
+      btn.addEventListener('click', () => {
+        addToCart({ name: btn.dataset.name, img: btn.dataset.img, category: btn.dataset.cat });
+        btn.classList.add('added');
+        btn.innerHTML = '<i data-lucide="check" aria-hidden="true"></i> Added!';
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+        setTimeout(() => {
+          btn.classList.remove('added');
+          btn.innerHTML = '<i data-lucide="shopping-cart" aria-hidden="true"></i> Add to Cart';
+          if (typeof lucide !== 'undefined') lucide.createIcons();
+        }, 1500);
+      });
+    });
   }
 
   function openDrawer(card) {
@@ -460,6 +479,45 @@ function initReviewsCarousel() {
   });
 }
 
+/* ── Cart ────────────────────────────────── */
+const CART_KEY = 'cbh_cart';
+
+function getCart() {
+  try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
+  catch { return []; }
+}
+
+function saveCart(cart) {
+  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  updateCartBadge();
+}
+
+function addToCart(item) {
+  const cart = getCart();
+  const existing = cart.find(c => c.name === item.name);
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({ name: item.name, img: item.img, category: item.category, qty: 1 });
+  }
+  saveCart(cart);
+}
+
+function updateCartBadge() {
+  const badge = document.getElementById('cartBadge');
+  if (!badge) return;
+  const total = getCart().reduce((sum, i) => sum + i.qty, 0);
+  badge.textContent = total;
+  badge.hidden = total === 0;
+  badge.classList.remove('bump');
+  void badge.offsetWidth; // reflow to restart animation
+  if (total > 0) badge.classList.add('bump');
+}
+
+function initCartBadge() {
+  updateCartBadge();
+}
+
 /* ── Enquiry Form ────────────────────────── */
 function initEnquiryForm() {
   const form       = document.getElementById('enquireForm');
@@ -518,19 +576,10 @@ function initEnquiryForm() {
 
     await new Promise(r => setTimeout(r, 1200));
 
-    submitBtn.disabled = false;
-    btnText.hidden = false;
-    btnLoading.hidden = true;
-    form.reset();
-
-    // Reset business field visibility
-    const businessGroup = document.getElementById('businessNameGroup');
-    if (businessGroup) businessGroup.style.display = 'none';
-
+    // Hide the form, show success message in its place
+    form.hidden = true;
     formSuccess.hidden = false;
     formSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     if (typeof lucide !== 'undefined') lucide.createIcons();
-
-    setTimeout(() => { formSuccess.hidden = true; }, 8000);
   });
 }

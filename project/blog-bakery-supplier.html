@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="How to choose the right wholesale bakery supplier for your café. Practical advice from Croydon Bake House on what to look for before signing up." />
+  <title>How to Choose the Right Bakery Supplier for Your Café | Croydon Bake House</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── Blog Post Layout ─────────────────── */
+    .post-hero {
+      position: relative;
+      height: 420px;
+      background: url('https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1600&h=700&fit=crop&q=85') center/cover no-repeat;
+    }
+    .post-hero__overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(44,18,8,0.55) 0%, rgba(44,18,8,0.82) 100%);
+    }
+    .post-hero__content {
+      position: relative; z-index: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 3rem;
+    }
+    .post-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 1rem;
+    }
+    .post-breadcrumb a { color: rgba(255,255,255,0.65); transition: color 180ms; }
+    .post-breadcrumb a:hover { color: var(--color-gold-light); }
+    .post-breadcrumb span { color: rgba(255,255,255,0.35); }
+    .post-hero__category {
+      display: inline-block;
+      font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em;
+      background: var(--color-gold);
+      color: var(--color-white);
+      padding: 0.3rem 0.85rem;
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.85rem;
+    }
+    .post-hero__title {
+      color: var(--color-white);
+      font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+      max-width: 720px;
+      line-height: 1.25;
+      margin-bottom: 0.85rem;
+    }
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+      flex-wrap: wrap;
+    }
+    .post-meta span { display: flex; align-items: center; gap: 0.35rem; }
+
+    /* Article body */
+    .post-body {
+      padding: 4rem 0 5rem;
+      background: var(--color-bg);
+    }
+    .post-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    .post-content { font-size: 1rem; line-height: 1.8; color: var(--color-text-muted); }
+    .post-content h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.2rem, 2.5vw, 1.55rem);
+      color: var(--color-primary);
+      margin: 2.5rem 0 0.9rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 2px solid var(--color-cream-dark);
+    }
+    .post-content h3 {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      color: var(--color-primary);
+      margin: 1.75rem 0 0.6rem;
+    }
+    .post-content p { margin-bottom: 1.25rem; color: var(--color-text-muted); }
+    .post-content p:first-child { font-size: 1.08rem; color: var(--color-text); line-height: 1.85; }
+    .post-content ul, .post-content ol {
+      margin: 0.75rem 0 1.25rem 1.25rem;
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .post-content ul li { list-style: disc; }
+    .post-content ol li { list-style: decimal; }
+    .post-content strong { color: var(--color-text); font-weight: 700; }
+    .post-content a { color: var(--color-gold); text-decoration: underline; }
+    .post-content a:hover { color: var(--color-terracotta); }
+
+    .tip-box {
+      background: var(--color-cream);
+      border-left: 4px solid var(--color-gold);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      padding: 1.25rem 1.5rem;
+      margin: 1.75rem 0;
+    }
+    .tip-box strong { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-gold); margin-bottom: 0.4rem; }
+    .tip-box p { margin: 0; font-size: 0.92rem; }
+
+    /* CTA at bottom of post */
+    .post-cta {
+      background: linear-gradient(135deg, var(--color-primary) 0%, #4A1F10 100%);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      margin-top: 3rem;
+    }
+    .post-cta h3 { color: var(--color-white); font-size: 1.3rem; margin-bottom: 0.6rem; }
+    .post-cta p { color: rgba(255,255,255,0.75); font-size: 0.95rem; margin-bottom: 1.5rem; }
+
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      color: var(--color-gold); font-size: 0.88rem; font-weight: 700;
+      margin-bottom: 2rem;
+      transition: gap 200ms;
+    }
+    .back-link:hover { gap: 0.7rem; }
+    .back-link svg { width: 16px; height: 16px; }
+
+    .post-cta .btn {
+      color: #ffffff !important;
+      transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1), padding 300ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 300ms ease;
+    }
+    .post-cta .btn:hover {
+      transform: scale(1.14) !important;
+      padding: 1.1rem 3.25rem !important;
+      box-shadow: 0 14px 44px rgba(200,145,58,0.5) !important;
+    }
+
+    @media (min-width: 1024px) {
+      .post-hero { height: 500px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar__inner">
+      <a href="index.html" class="navbar__logo" aria-label="Croydon Bake House Home">
+        <span class="logo-wordmark">Croydon Bake House</span>
+      </a>
+      <button class="navbar__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="navbar__nav" id="navMenu" aria-label="Main navigation">
+        <a href="index.html#enquire" class="nav-link">Enquire</a>
+        <a href="index.html#about" class="nav-link">About</a>
+        <a href="index.html#products" class="nav-link">Products</a>
+        <a href="index.html#gallery" class="nav-link">Gallery</a>
+        <a href="index.html#blog" class="nav-link active">Blog</a>
+        <a href="index.html#contact" class="nav-link">Contact</a>
+        <a href="index.html#enquire" class="btn btn--gold btn--sm nav-cta">Get a Quote</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- POST HERO -->
+    <section class="post-hero">
+      <div class="post-hero__overlay"></div>
+      <div class="container post-hero__content">
+        <div class="post-breadcrumb">
+          <a href="index.html">Home</a>
+          <span>/</span>
+          <a href="index.html#blog">Blog</a>
+          <span>/</span>
+          <span>Wholesale Tips</span>
+        </div>
+        <span class="post-hero__category">Wholesale Tips</span>
+        <h1 class="post-hero__title">How to Choose the Right Bakery Supplier for Your Café</h1>
+        <div class="post-meta">
+          <span><i data-lucide="calendar" aria-hidden="true"></i> March 15, 2026</span>
+          <span><i data-lucide="clock" aria-hidden="true"></i> 6 min read</span>
+          <span><i data-lucide="user" aria-hidden="true"></i> Croydon Bake House</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARTICLE BODY -->
+    <div class="post-body">
+      <div class="container">
+        <div class="post-layout">
+          <article class="post-content">
+
+            <a href="index.html#blog" class="back-link">
+              <i data-lucide="arrow-left" aria-hidden="true"></i> Back to Blog
+            </a>
+
+            <p>Finding the right wholesale bakery supplier is one of those decisions that shapes your café's reputation before customers even touch the menu. Your pastries arrive every morning. Your regulars expect the same quality they had yesterday. Get the supplier wrong and you will feel it quickly.</p>
+
+            <p>After years of supplying cafés, restaurants and businesses across Melbourne's east, we have a pretty good sense of what our customers value most and what tends to go wrong when the fit is not quite right. Here is what to think about before you commit.</p>
+
+            <h2>1. Freshness Has to Be Non-Negotiable</h2>
+
+            <p>This sounds obvious, but it is worth saying plainly: not all bakeries bake daily. Some batch-produce items and freeze them for later distribution. That is fine for certain products, but if you are serving pies and sausage rolls, your customers will notice the difference.</p>
+
+            <p>Ask your potential supplier directly: what time do you start baking? When does the product leave your kitchen? What is the shelf life on delivery day? A supplier worth working with will answer those questions without hesitation.</p>
+
+            <div class="tip-box">
+              <strong>What to look for</strong>
+              <p>A reliable wholesale bakery bakes from early morning and delivers within a few hours of production. If you are placing orders the day before for same-morning delivery, that is a good sign.</p>
+            </div>
+
+            <h2>2. Consistency Matters More Than the Best Day</h2>
+
+            <p>Every bakery has a great day. The crust is perfect, the filling is well-seasoned, the slices are cut evenly. What separates a good supplier from a great one is whether that level holds week after week.</p>
+
+            <p>Before committing to a regular account, place a few trial orders on different days of the week. Tuesday and Friday often look different at a bakery that is stretched thin. You want to see the same standard across all of them.</p>
+
+            <p>Ask if you can visit the kitchen. A supplier confident in their operation will welcome that. One that hedges probably has a reason to.</p>
+
+            <h2>3. Understand the Ordering Minimums</h2>
+
+            <p>Minimum order quantities (MOQs) vary widely between wholesale bakeries. Some require a set dollar spend per order, others work by item count. Some have no minimums at all for regular accounts.</p>
+
+            <p>Think about your actual weekly volumes before you agree to anything. Ordering more than you need to hit a minimum means waste, and waste eats your margin fast. A good supplier will be upfront about what they require and will not push you into quantities that do not make sense for your size of operation.</p>
+
+            <ul>
+              <li>Ask for a copy of their wholesale pricing and MOQ structure in writing</li>
+              <li>Find out if the minimum changes on public holidays or school holidays</li>
+              <li>Check whether there is a cancellation window if your volume drops in a quiet week</li>
+            </ul>
+
+            <h2>4. Delivery Timing Has to Work for Your Service</h2>
+
+            <p>A café that opens at 7am needs its pastries there before the first customer walks in. If your supplier cannot confirm a delivery window that works for your opening routine, the relationship will become stressful quickly.</p>
+
+            <p>Find out whether delivery times are fixed or flexible. Ask what happens when a driver is running late. A good supplier will have a direct line of communication for delivery day issues, not just a general email address.</p>
+
+            <div class="tip-box">
+              <strong>Practical tip</strong>
+              <p>Try to get a morning delivery window in writing. Vague promises like "sometime in the morning" are not good enough when you have a cabinet to fill by opening time.</p>
+            </div>
+
+            <h2>5. Product Range Affects Your Menu Flexibility</h2>
+
+            <p>A supplier with a narrow range locks you into a limited cabinet. Over time, you want the ability to add seasonal items, swap out slow sellers, or try something new without having to bring in a second supplier.</p>
+
+            <p>Look for a bakery that covers a solid core range: pies, rolls, slices, scrolls and quiche as a minimum. If they also offer cakes and specialty items, that gives you room to grow the offer without complicating your supply chain.</p>
+
+            <p>Ask how often they update their range. A bakery that has not changed its menu in five years is probably not putting much thought into what is selling in the market right now.</p>
+
+            <h2>6. Build an Actual Relationship</h2>
+
+            <p>This is the part most people skip. Your bakery supplier is not just a vendor. If something goes wrong with an order, if you need to change quantities at short notice, or if you want to discuss a custom item for an event, you need to be able to pick up the phone and talk to someone who knows your account.</p>
+
+            <p>Pay attention to how a potential supplier communicates from the very first enquiry. Are they responsive? Do they follow up? Do they seem interested in your business or just your order? Those early signals tend to hold.</p>
+
+            <h2>Red Flags to Watch For</h2>
+
+            <ul>
+              <li>Vague answers about baking times or product shelf life</li>
+              <li>No flexibility on delivery windows</li>
+              <li>Pressure to commit to large volumes before you have trialled the product</li>
+              <li>No clear contact for delivery day issues</li>
+              <li>Inconsistent product quality across trial orders</li>
+            </ul>
+
+            <h2>Questions Worth Asking</h2>
+
+            <ol>
+              <li>What time does baking start each morning?</li>
+              <li>What is the guaranteed delivery window for my suburb?</li>
+              <li>What is your minimum order for a regular wholesale account?</li>
+              <li>Can I visit the kitchen before committing?</li>
+              <li>How do I handle a last-minute change to my order?</li>
+              <li>Do you offer a trial period before locking in a contract?</li>
+            </ol>
+
+            <p>Take your time with this decision. The right wholesale bakery partner makes your morning routine smoother, your cabinet more consistent, and your customers happier. The wrong one becomes a daily source of stress.</p>
+
+            <p>If you are based in Melbourne's east and want to discuss a wholesale account with us, we are happy to walk you through our range and how we work. We have been at it long enough to know that the relationship matters just as much as the product.</p>
+
+            <div class="post-cta">
+              <h3>Ready to Talk Wholesale?</h3>
+              <p>We supply cafés, restaurants and businesses across Melbourne's east. Get in touch and we will get back to you within one business day.</p>
+              <a href="index.html#enquire" class="btn btn--gold btn--shine">Start a Wholesale Enquiry</a>
+            </div>
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <span class="logo-wordmark logo-wordmark--lg">Croydon Bake House</span>
+        <p>Premium wholesale bakery in Croydon, VIC. Supplying cafes, restaurants and businesses across Melbourne's east.</p>
+        <a href="https://www.facebook.com/croydonbakehouse" target="_blank" rel="noopener noreferrer" class="footer__social" aria-label="Facebook"><i data-lucide="facebook" aria-hidden="true"></i></a>
+        <a href="https://www.instagram.com/croydonbakehouse/" target="_blank" rel="noopener noreferrer" class="footer__social" aria-label="Instagram"><i data-lucide="instagram" aria-hidden="true"></i></a>
+      </div>
+      <div class="footer__links"><h4>Navigation</h4><ul><li><a href="index.html#enquire">Wholesale Enquiry</a></li><li><a href="index.html#about">About Us</a></li><li><a href="index.html#products">Products</a></li><li><a href="index.html#gallery">Gallery</a></li><li><a href="index.html#blog">Blog</a></li><li><a href="index.html#contact">Contact</a></li></ul></div>
+      <div class="footer__links"><h4>From the Blog</h4><ul><li><a href="blog-bakery-supplier.html">Choosing a Bakery Supplier</a></li><li><a href="blog-pie-recipe.html">How to Bake a Classic Pie</a></li><li><a href="blog-sausage-rolls.html">Perfect Sausage Rolls</a></li></ul></div>
+      <div class="footer__contact"><h4>Contact</h4><p>150 Main Street<br />Croydon VIC 3136</p><a href="tel:0397253161">03 9725 3161</a><p class="footer__hours">Mon–Sat: 6:00 AM – 5:30 PM<br />Sun: 7:00 AM – 3:00 PM</p></div>
+    </div>
+    <div class="footer__bottom"><div class="container"><p>&copy; <span id="footerYear"></span> Croydon Bake House. All rights reserved.</p><p>150 Main Street, Croydon VIC 3136 · 03 9725 3161</p></div></div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to top"><i data-lucide="chevron-up" aria-hidden="true"></i></button>
+  <script src="script.js"></script>
+</body>
+</html>

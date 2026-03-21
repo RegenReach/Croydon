@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Request a wholesale quote from Croydon Bake House. Review your selected products and send us your enquiry." />
+  <title>Quote Request | Croydon Bake House</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar__inner">
+      <a href="index.html" class="navbar__logo" aria-label="Croydon Bake House Home">
+        <span class="logo-wordmark">Croydon Bake House</span>
+      </a>
+      <nav class="navbar__nav" id="navMenu" aria-label="Main navigation">
+        <a href="index.html#enquire" class="nav-link">Enquire</a>
+        <a href="index.html#about" class="nav-link">About</a>
+        <a href="index.html#products" class="nav-link">Products</a>
+        <a href="index.html#gallery" class="nav-link">Gallery</a>
+        <a href="index.html#blog" class="nav-link">Blog</a>
+        <a href="index.html#contact" class="nav-link">Contact</a>
+      </nav>
+      <div class="navbar__actions">
+        <a href="index.html#enquire" class="btn btn--gold btn--sm nav-cta">Get a Quote</a>
+        <a href="cart.html" class="navbar__cart" id="cartLink" aria-label="View cart">
+          <i data-lucide="shopping-cart" aria-hidden="true"></i>
+          <span class="cart-badge" id="cartBadge" hidden>0</span>
+        </a>
+        <button class="navbar__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="cart-page">
+    <div class="container">
+      <div class="cart-page__header">
+        <span class="section-label">Wholesale Enquiry</span>
+        <h1>Your Quote Request</h1>
+        <p>Review your selected products, adjust quantities, then fill in your details to request a quote.</p>
+      </div>
+
+      <div class="cart-layout">
+
+        <!-- LEFT: Cart Items -->
+        <div>
+          <div class="cart-items" id="cartItemsPanel">
+            <!-- Populated by JS -->
+          </div>
+          <div style="margin-top:1.25rem;">
+            <a href="index.html#products" class="btn btn--outline btn--shine">
+              <i data-lucide="arrow-left" aria-hidden="true"></i> Continue Browsing
+            </a>
+          </div>
+        </div>
+
+        <!-- RIGHT: Quote Form -->
+        <div class="cart-sidebar">
+          <div class="quote-panel">
+            <h2>Request a Quote</h2>
+            <p>We'll get back to you within one business day with pricing and availability.</p>
+
+            <!-- Dynamic summary of selected items -->
+            <div class="quote-summary" id="quoteSummary">
+              <div class="quote-summary__title">Selected Products</div>
+              <div id="quoteSummaryItems">
+                <span class="quote-summary__empty">No items selected yet.</span>
+              </div>
+            </div>
+
+            <form class="quote-form" id="quoteForm" novalidate>
+
+              <!-- Customer type toggle -->
+              <div class="customer-type">
+                <p class="customer-type__label">I am enquiring as a…</p>
+                <div class="customer-type__options">
+                  <label class="type-option">
+                    <input type="radio" name="qCustomerType" value="individual" id="qTypeIndividual" checked />
+                    <span class="type-option__card">
+                      <i data-lucide="user" aria-hidden="true"></i>
+                      <strong>Individual</strong>
+                      <small>Bulk order for a party or event</small>
+                    </span>
+                  </label>
+                  <label class="type-option">
+                    <input type="radio" name="qCustomerType" value="business" id="qTypeBusiness" />
+                    <span class="type-option__card">
+                      <i data-lucide="building-2" aria-hidden="true"></i>
+                      <strong>Business</strong>
+                      <small>Wholesale / café / restaurant</small>
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="qFirstName">First Name <span class="required" aria-hidden="true">*</span></label>
+                <input type="text" id="qFirstName" name="firstName" autocomplete="given-name" placeholder="Jane" required />
+                <span class="form-error" id="qFirstNameError" role="alert" aria-live="polite"></span>
+              </div>
+              <div class="form-group">
+                <label for="qLastName">Last Name <span class="required" aria-hidden="true">*</span></label>
+                <input type="text" id="qLastName" name="lastName" autocomplete="family-name" placeholder="Smith" required />
+                <span class="form-error" id="qLastNameError" role="alert" aria-live="polite"></span>
+              </div>
+              <div class="form-group" id="qBusinessNameGroup" style="display:none;">
+                <label for="qBusinessName">Business Name <span class="required" aria-hidden="true">*</span></label>
+                <input type="text" id="qBusinessName" name="businessName" autocomplete="organization" placeholder="Your Café Pty Ltd" />
+                <span class="form-error" id="qBusinessNameError" role="alert" aria-live="polite"></span>
+              </div>
+              <div class="form-group">
+                <label for="qEmail">Email <span class="required" aria-hidden="true">*</span></label>
+                <input type="email" id="qEmail" name="email" autocomplete="email" placeholder="jane@example.com.au" required />
+                <span class="form-error" id="qEmailError" role="alert" aria-live="polite"></span>
+              </div>
+              <div class="form-group">
+                <label for="qPhone">Phone <span class="required" aria-hidden="true">*</span></label>
+                <input type="tel" id="qPhone" name="phone" autocomplete="tel" placeholder="04XX XXX XXX" required />
+                <span class="form-error" id="qPhoneError" role="alert" aria-live="polite"></span>
+              </div>
+              <div class="form-group">
+                <label for="qMessage">Additional Notes</label>
+                <textarea id="qMessage" name="message" rows="3" placeholder="Delivery suburb, weekly volume, special requirements…"></textarea>
+              </div>
+              <button type="submit" class="btn btn--primary btn--full btn--shine" id="quoteSubmitBtn">
+                <span class="btn-text"><i data-lucide="send" aria-hidden="true"></i> Request Quote</span>
+                <span class="btn-loading" hidden>Sending…</span>
+              </button>
+            </form>
+
+            <div class="quote-success" id="quoteSuccess" hidden role="status" aria-live="polite">
+              <i data-lucide="check-circle-2" aria-hidden="true"></i>
+              <strong>Quote request sent!</strong>
+              <p>Your enquiry has been received. We'll be in touch within one business day.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <span class="logo-wordmark logo-wordmark--lg">Croydon Bake House</span>
+        <p>Premium wholesale bakery in Croydon, VIC. Supplying cafes, restaurants and businesses across Melbourne's east.</p>
+        <a href="https://www.facebook.com/croydonbakehouse" target="_blank" rel="noopener noreferrer" class="footer__social" aria-label="Facebook"><i data-lucide="facebook" aria-hidden="true"></i></a>
+        <a href="https://www.instagram.com/croydonbakehouse/" target="_blank" rel="noopener noreferrer" class="footer__social" aria-label="Instagram"><i data-lucide="instagram" aria-hidden="true"></i></a>
+      </div>
+      <div class="footer__links"><h4>Navigation</h4><ul><li><a href="index.html#enquire">Wholesale Enquiry</a></li><li><a href="index.html#about">About Us</a></li><li><a href="index.html#products">Products</a></li><li><a href="index.html#gallery">Gallery</a></li><li><a href="index.html#blog">Blog</a></li><li><a href="index.html#contact">Contact</a></li></ul></div>
+      <div class="footer__links"><h4>Products</h4><ul><li><a href="index.html#products">Pies &amp; Pasties</a></li><li><a href="index.html#products">Sausage Rolls</a></li><li><a href="index.html#products">Slices &amp; Lamingtons</a></li><li><a href="index.html#products">Cakes</a></li><li><a href="index.html#products">Scrolls</a></li><li><a href="index.html#products">Quiche</a></li></ul></div>
+      <div class="footer__contact"><h4>Contact</h4><p>150 Main Street<br />Croydon VIC 3136</p><a href="tel:0397253161">03 9725 3161</a><p class="footer__hours">Mon–Sat: 6:00 AM – 5:30 PM<br />Sun: 7:00 AM – 3:00 PM</p></div>
+    </div>
+    <div class="footer__bottom"><div class="container"><p>&copy; <span id="footerYear"></span> Croydon Bake House. All rights reserved.</p><p>150 Main Street, Croydon VIC 3136 · 03 9725 3161</p></div></div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to top"><i data-lucide="chevron-up" aria-hidden="true"></i></button>
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCart();
+      initQuoteForm();
+    });
+
+    function renderCart() {
+      const cart = getCart();
+      const panel = document.getElementById('cartItemsPanel');
+      const summaryItems = document.getElementById('quoteSummaryItems');
+
+      if (cart.length === 0) {
+        panel.innerHTML = `
+          <div class="cart-empty">
+            <i data-lucide="shopping-cart" aria-hidden="true"></i>
+            <h3>Your cart is empty</h3>
+            <p>Browse our products and add items to get started.</p>
+            <a href="index.html#products" class="btn btn--primary btn--shine" style="margin-top:0.5rem;">Browse Products</a>
+          </div>`;
+        summaryItems.innerHTML = '<span class="quote-summary__empty">No items selected yet.</span>';
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+        return;
+      }
+
+      panel.innerHTML = `
+        <div class="cart-items__head">
+          <h2>${cart.reduce((s,i) => s + i.qty, 0)} item${cart.reduce((s,i) => s + i.qty, 0) !== 1 ? 's' : ''} in your cart</h2>
+          <button class="cart-clear-btn" id="clearCartBtn">Clear all</button>
+        </div>
+        <div class="cart-item-list" id="cartItemList">
+          ${cart.map((item, idx) => `
+            <div class="cart-item" data-idx="${idx}">
+              <img class="cart-item__img" src="${item.img}" alt="${item.name}" loading="lazy" />
+              <div class="cart-item__info">
+                <div class="cart-item__name">${item.name}</div>
+                <div class="cart-item__cat">${item.category}</div>
+              </div>
+              <div class="cart-item__controls">
+                <div class="qty-control">
+                  <button class="qty-btn qty-dec" data-idx="${idx}" aria-label="Decrease quantity">−</button>
+                  <span class="qty-value">${item.qty}</span>
+                  <button class="qty-btn qty-inc" data-idx="${idx}" aria-label="Increase quantity">+</button>
+                </div>
+                <button class="cart-item__remove" data-idx="${idx}" aria-label="Remove ${item.name}">Remove</button>
+              </div>
+            </div>
+          `).join('')}
+        </div>`;
+
+      summaryItems.innerHTML = cart.map(item => `
+        <div class="quote-summary__item">
+          <span>${item.name}</span>
+          <span class="quote-summary__qty">×${item.qty}</span>
+        </div>`).join('');
+
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+
+      // Bind controls
+      document.getElementById('clearCartBtn').addEventListener('click', () => {
+        saveCart([]);
+        renderCart();
+      });
+
+      document.querySelectorAll('.qty-inc').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const cart = getCart();
+          cart[btn.dataset.idx].qty += 1;
+          saveCart(cart);
+          renderCart();
+        });
+      });
+
+      document.querySelectorAll('.qty-dec').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const cart = getCart();
+          const idx = parseInt(btn.dataset.idx);
+          if (cart[idx].qty > 1) {
+            cart[idx].qty -= 1;
+            saveCart(cart);
+          } else {
+            cart.splice(idx, 1);
+            saveCart(cart);
+          }
+          renderCart();
+        });
+      });
+
+      document.querySelectorAll('.cart-item__remove').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const cart = getCart();
+          cart.splice(parseInt(btn.dataset.idx), 1);
+          saveCart(cart);
+          renderCart();
+        });
+      });
+    }
+
+    function initQuoteForm() {
+      const form = document.getElementById('quoteForm');
+      if (!form) return;
+
+      // Customer type toggle
+      const radios           = form.querySelectorAll('input[name="qCustomerType"]');
+      const businessGroup    = document.getElementById('qBusinessNameGroup');
+      const businessInput    = document.getElementById('qBusinessName');
+      const messageField     = document.getElementById('qMessage');
+      const msgPlaceholders  = {
+        individual: 'Delivery suburb, occasion, special requirements…',
+        business:   'Delivery location, weekly volume, specific requirements…',
+      };
+      radios.forEach(radio => {
+        radio.addEventListener('change', () => {
+          const isBusiness = radio.value === 'business';
+          businessGroup.style.display = isBusiness ? '' : 'none';
+          if (businessInput) businessInput.required = isBusiness;
+          if (messageField) messageField.placeholder = msgPlaceholders[radio.value];
+        });
+      });
+
+      const fields = {
+        qFirstName: { err: 'qFirstNameError', msg: 'Please enter your first name.' },
+        qLastName:  { err: 'qLastNameError',  msg: 'Please enter your last name.' },
+        qEmail:     { err: 'qEmailError',     msg: 'Please enter a valid email address.' },
+        qPhone:     { err: 'qPhoneError',     msg: 'Please enter your phone number.' },
+      };
+
+      const validate = (id) => {
+        const el  = document.getElementById(id);
+        const err = document.getElementById(fields[id].err);
+        const valid = id === 'qEmail'
+          ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim())
+          : el.value.trim().length > 0;
+        el.classList.toggle('error', !valid);
+        err.textContent = valid ? '' : fields[id].msg;
+        return valid;
+      };
+
+      Object.keys(fields).forEach(id => {
+        document.getElementById(id).addEventListener('blur', () => validate(id));
+      });
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        let allValid = Object.keys(fields).map(id => validate(id)).every(Boolean);
+
+        // Validate business name if Business selected
+        const isBusiness = form.querySelector('input[name="qCustomerType"]:checked')?.value === 'business';
+        if (isBusiness && businessInput) {
+          const bValid = businessInput.value.trim().length > 0;
+          businessInput.classList.toggle('error', !bValid);
+          document.getElementById('qBusinessNameError').textContent = bValid ? '' : 'Please enter your business name.';
+          if (!bValid) allValid = false;
+        }
+
+        if (!allValid) {
+          const firstErr = form.querySelector('input.error');
+          if (firstErr) firstErr.focus();
+          return;
+        }
+
+        const submitBtn  = document.getElementById('quoteSubmitBtn');
+        const btnText    = submitBtn.querySelector('.btn-text');
+        const btnLoading = submitBtn.querySelector('.btn-loading');
+        submitBtn.disabled = true;
+        btnText.hidden = true;
+        btnLoading.hidden = false;
+
+        await new Promise(r => setTimeout(r, 1200));
+
+        // Hide form and summary, show success in their place
+        form.hidden = true;
+        document.getElementById('quoteSummary').hidden = true;
+
+        // Clear cart after successful quote
+        saveCart([]);
+        renderCart();
+
+        const success = document.getElementById('quoteSuccess');
+        success.hidden = false;
+        success.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+      });
+    }
+  </script>
+</body>
+</html>

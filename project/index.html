@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Croydon Bake House — Premium wholesale bakery in Croydon, VIC. Fresh pies, slices, pastries, cakes and scrolls." />
+  <meta name="description" content="Croydon Bake House: Premium wholesale bakery in Croydon, VIC. Fresh pies, slices, pastries, cakes and scrolls." />
   <title>Croydon Bake House | Premium Wholesale Bakery</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -27,9 +27,6 @@
       <a href="#home" class="navbar__logo" aria-label="Croydon Bake House Home">
         <span class="logo-wordmark">Croydon Bake House</span>
       </a>
-      <button class="navbar__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
       <nav class="navbar__nav" id="navMenu" aria-label="Main navigation">
         <a href="#enquire" class="nav-link">Enquire</a>
         <a href="#about" class="nav-link">About</a>
@@ -37,8 +34,17 @@
         <a href="#gallery" class="nav-link">Gallery</a>
         <a href="#blog" class="nav-link">Blog</a>
         <a href="#contact" class="nav-link">Contact</a>
-        <a href="#enquire" class="btn btn--gold btn--sm nav-cta">Get a Quote</a>
       </nav>
+      <div class="navbar__actions">
+        <a href="#enquire" class="btn btn--gold btn--sm nav-cta">Get a Quote</a>
+        <a href="cart.html" class="navbar__cart" id="cartLink" aria-label="View cart">
+          <i data-lucide="shopping-cart" aria-hidden="true"></i>
+          <span class="cart-badge" id="cartBadge" hidden>0</span>
+        </a>
+        <button class="navbar__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -60,7 +66,7 @@
             <span>Wholesale Bakery &nbsp;·&nbsp; Croydon, VIC</span>
           </div>
           <h1 class="hero__title">Freshly Baked.<br /><em>Delivered with Care.</em></h1>
-          <p class="hero__subtitle">We supply cafes, restaurants, and businesses across Melbourne's east with premium pies, slices, pastries and scrolls — baked fresh every day.</p>
+          <p class="hero__subtitle">We supply cafes, restaurants, and businesses all across Melbourne with premium pies, slices, pastries and scrolls, baked fresh every day.</p>
           <div class="hero__ctas">
             <a href="#enquire" class="btn btn--gold btn--lg btn--shine">Wholesale Enquiry</a>
             <a href="#products" class="btn btn--ghost btn--lg">View Products</a>
@@ -81,12 +87,12 @@
         <div class="enquire__copy reveal">
           <span class="section-label">Order &amp; Enquiry</span>
           <h2 class="section-title">Let's Work Together</h2>
-          <p class="enquire__desc">Whether you're ordering for a special occasion or setting up a regular wholesale account — we'd love to work with you. We'll get back to you within one business day.</p>
+          <p class="enquire__desc">Whether you're ordering for a special occasion or setting up a regular wholesale account. We'd love to work with you. We'll get back to you within one business day.</p>
           <ul class="enquire__perks">
             <li><i data-lucide="check-circle" aria-hidden="true"></i> Baked fresh from 6am daily</li>
             <li><i data-lucide="check-circle" aria-hidden="true"></i> Flexible order quantities</li>
             <li><i data-lucide="check-circle" aria-hidden="true"></i> Consistent quality, every time</li>
-            <li><i data-lucide="check-circle" aria-hidden="true"></i> Local Melbourne east delivery</li>
+            <li><i data-lucide="check-circle" aria-hidden="true"></i> Melbourne-wide delivery available</li>
           </ul>
         </div>
 
@@ -166,7 +172,7 @@
 
           <div class="form-group">
             <label for="message">Message</label>
-            <textarea id="message" name="message" rows="4" placeholder="Tell us about your order — quantity, occasion, delivery suburb…"></textarea>
+            <textarea id="message" name="message" rows="4" placeholder="Tell us about your order: quantity, occasion, delivery suburb…"></textarea>
           </div>
 
           <button type="submit" class="btn btn--primary btn--full btn--shine" id="submitBtn">
@@ -174,11 +180,15 @@
             <span class="btn-loading" hidden>Sending…</span>
           </button>
 
-          <div class="form-success" id="formSuccess" hidden role="status" aria-live="polite">
-            <i data-lucide="check-circle-2" aria-hidden="true"></i>
-            <strong>Thank you!</strong> We'll be in touch within one business day.
-          </div>
         </form>
+
+        <div class="form-success" id="formSuccess" hidden role="status" aria-live="polite">
+          <i data-lucide="check-circle-2" aria-hidden="true"></i>
+          <div>
+            <strong>Thank you!</strong>
+            <p>Your enquiry has been received. We'll be in touch within one business day.</p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -207,8 +217,8 @@
         <div class="about__copy reveal">
           <span class="section-label">Who We Are</span>
           <h2 class="section-title">A Neighbourhood Bakery.<br />Built on Quality.</h2>
-          <p>Croydon Bake House has been serving Melbourne's east with freshly baked goods from our kitchen on Main Street. What started as a beloved local bakery has grown into a trusted wholesale supplier for cafes, restaurants, and businesses across the region.</p>
-          <p>Every pie, slice, scroll and quiche is made in-house using quality ingredients — no shortcuts, no compromise. Our loyal customers keep coming back because they can taste the difference.</p>
+          <p>Croydon Bake House has been serving Melbourne with freshly baked goods from our kitchen on Main Street. What started as a beloved local bakery has grown into a trusted wholesale supplier for cafes, restaurants, and businesses all across Melbourne.</p>
+          <p>Every pie, slice, scroll and quiche is made in-house using quality ingredients. No shortcuts, no compromise. Our loyal customers keep coming back because they can taste the difference.</p>
           <div class="about__stats">
             <div class="stat">
               <span class="stat__num"><span class="count-up" data-target="8">0</span>+</span>
@@ -235,7 +245,7 @@
         <div class="section-header reveal">
           <span class="section-label">Our Range</span>
           <h2 class="section-title">Fresh from Our Kitchen</h2>
-          <p class="section-subtitle">Tap a category to browse what we bake. All products fresh daily — <a href="#enquire">contact us</a> for pricing and availability.</p>
+          <p class="section-subtitle">Tap a category to browse what we bake. All products fresh daily. <a href="#enquire">Contact us</a> for pricing and availability.</p>
         </div>
 
         <div class="category-grid" id="categoryGrid">
@@ -359,13 +369,13 @@
             <img src="images/Faccebook/472745866_615882104289183_1245264976695278782_n.jpg" alt="Daily baked goods at Croydon Bake House" loading="lazy" />
             <div class="bento-item__overlay"><div class="bento-item__info"><h3>Baked Daily</h3><p>Warm from our oven every morning</p></div></div>
           </div>
-          <div class="bento-item reveal" style="--delay:120ms" data-title="Quality Ingredients" data-desc="No shortcuts — quality in every bite">
+          <div class="bento-item reveal" style="--delay:120ms" data-title="Quality Ingredients" data-desc="No shortcuts, quality in every bite">
             <img src="images/Faccebook/470634693_602192772324783_5183989296729995826_n.jpg" alt="Quality baked goods from Croydon Bake House" loading="lazy" />
             <div class="bento-item__overlay"><div class="bento-item__info"><h3>Quality Ingredients</h3><p>No shortcuts, every time</p></div></div>
           </div>
-          <div class="bento-item bento-item--2x2 reveal" style="--delay:150ms" data-title="Croydon's Favourite" data-desc="Loved by locals and businesses across Melbourne's east">
+          <div class="bento-item bento-item--2x2 reveal" style="--delay:150ms" data-title="Loved All Across Melbourne" data-desc="Trusted by cafes, restaurants and businesses all across Melbourne">
             <img src="images/Faccebook/470189758_599986329212094_4034607707299806881_n.jpg" alt="Croydon Bake House favourites" loading="lazy" />
-            <div class="bento-item__overlay"><div class="bento-item__info"><h3>Croydon's Favourite</h3><p>Loved across Melbourne's east</p></div></div>
+            <div class="bento-item__overlay"><div class="bento-item__info"><h3>Loved All Across Melbourne</h3><p>Trusted by businesses city-wide</p></div></div>
           </div>
           <div class="bento-item bento-item--1x2 reveal" style="--delay:210ms" data-title="Wholesale Ready" data-desc="Fresh supply for cafes, restaurants and businesses">
             <img src="images/Faccebook/484509851_688577053693190_2938101032001209328_n.jpg" alt="Wholesale baked goods from Croydon Bake House" loading="lazy" />
@@ -375,7 +385,7 @@
             <img src="images/Faccebook/484803765_688567750360787_5318546032055170835_n.jpg" alt="Croydon Bake House baked with care" loading="lazy" />
             <div class="bento-item__overlay"><div class="bento-item__info"><h3>Made with Care</h3><p>Crafted with care and attention</p></div></div>
           </div>
-          <div class="bento-item reveal" style="--delay:300ms" data-title="Our Signature Range" data-desc="Pies, slices, scrolls and more — all baked in-house">
+          <div class="bento-item reveal" style="--delay:300ms" data-title="Our Signature Range" data-desc="Pies, slices, scrolls and more, all baked in-house">
             <img src="images/Faccebook/470584863_600098525867541_182874329154716730_n.jpg" alt="Croydon Bake House signature range" loading="lazy" />
             <div class="bento-item__overlay"><div class="bento-item__info"><h3>Our Signature Range</h3><p>Pies, slices, scrolls &amp; more</p></div></div>
           </div>
@@ -420,15 +430,15 @@
         <div class="blog-grid">
           <article class="blog-card reveal" style="--delay:0ms">
             <div class="blog-card__img-wrap"><img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&h=380&fit=crop&q=80" alt="Baker preparing dough" loading="lazy" /><span class="blog-card__category">Wholesale Tips</span></div>
-            <div class="blog-card__body"><time class="blog-card__date" datetime="2026-03-15">March 15, 2026</time><h3><a href="#">How to Choose the Right Bakery Supplier for Your Café</a></h3><p>Selecting a reliable wholesale bakery partner is one of the most important decisions a café owner makes. Here's what to look for…</p><a href="#" class="read-more">Read More <i data-lucide="arrow-right" aria-hidden="true"></i></a></div>
+            <div class="blog-card__body"><time class="blog-card__date" datetime="2026-03-15">March 15, 2026</time><h3><a href="blog-bakery-supplier.html">How to Choose the Right Bakery Supplier for Your Café</a></h3><p>Selecting a reliable wholesale bakery partner is one of the most important decisions a café owner makes. Here is what to look for before you commit.</p><a href="blog-bakery-supplier.html" class="read-more">Read More <i data-lucide="arrow-right" aria-hidden="true"></i></a></div>
           </article>
           <article class="blog-card reveal" style="--delay:100ms">
-            <div class="blog-card__img-wrap"><img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=600&h=380&fit=crop&q=80" alt="Vanilla slice" loading="lazy" /><span class="blog-card__category">Behind the Scenes</span></div>
-            <div class="blog-card__body"><time class="blog-card__date" datetime="2026-03-01">March 1, 2026</time><h3><a href="#">Why Our Vanilla Slice Has a Cult Following in Croydon</a></h3><p>It starts with real custard, real pastry, and a recipe we've quietly perfected. Here's the story behind our most requested product…</p><a href="#" class="read-more">Read More <i data-lucide="arrow-right" aria-hidden="true"></i></a></div>
+            <div class="blog-card__img-wrap"><img src="images/Google/steak_cheese_pie.jpg" alt="Freshly baked meat pies" loading="lazy" /><span class="blog-card__category">Recipe</span></div>
+            <div class="blog-card__body"><time class="blog-card__date" datetime="2026-03-01">March 1, 2026</time><h3><a href="blog-pie-recipe.html">How to Bake a Classic Aussie Meat Pie from Scratch</a></h3><p>There is something deeply satisfying about pulling a golden pie out of the oven. Here is our step-by-step guide to the filling, the pastry, and all the bits that actually matter.</p><a href="blog-pie-recipe.html" class="read-more">Read More <i data-lucide="arrow-right" aria-hidden="true"></i></a></div>
           </article>
           <article class="blog-card reveal" style="--delay:200ms">
-            <div class="blog-card__img-wrap"><img src="https://images.unsplash.com/photo-1586985289906-406988974504?w=600&h=380&fit=crop&q=80" alt="Sausage rolls" loading="lazy" /><span class="blog-card__category">Seasonal</span></div>
-            <div class="blog-card__body"><time class="blog-card__date" datetime="2026-02-14">February 14, 2026</time><h3><a href="#">New Autumn Menu: Butter Chicken Pie &amp; More</a></h3><p>As the weather cools, we're introducing comforting new flavours to our wholesale range. Say hello to our butter chicken pie and seasonal specials…</p><a href="#" class="read-more">Read More <i data-lucide="arrow-right" aria-hidden="true"></i></a></div>
+            <div class="blog-card__img-wrap"><img src="images/Google/sausage_roll.jpg" alt="Sausage rolls fresh from the oven" loading="lazy" /><span class="blog-card__category">Recipe</span></div>
+            <div class="blog-card__body"><time class="blog-card__date" datetime="2026-02-14">February 14, 2026</time><h3><a href="blog-sausage-rolls.html">The Secret to Perfect Sausage Rolls Every Time</a></h3><p>Flaky pastry, well-seasoned filling, crisp base. We break down exactly what goes into a sausage roll worth coming back for, with a full recipe you can make at home.</p><a href="blog-sausage-rolls.html" class="read-more">Read More <i data-lucide="arrow-right" aria-hidden="true"></i></a></div>
           </article>
         </div>
       </div>
@@ -496,7 +506,7 @@
                   </div>
                 </div>
                 <div class="review-card__stars">★★★★★</div>
-                <p class="review-card__text">Croydon Bakehouse never disappoints! Their crispy pork banh mi is incredible — the crackling is perfectly crunchy, the pork is flavorful, and the pickled veggies give it the perfect balance. Fresh baguette, great portions, and friendly service. Highly recommend!</p>
+                <p class="review-card__text">Croydon Bakehouse never disappoints! Their crispy pork banh mi is incredible. The crackling is perfectly crunchy, the pork is flavorful, and the pickled veggies give it the perfect balance. Fresh baguette, great portions, and friendly service. Highly recommend!</p>
                 <span class="review-card__tag">Food: 5/5 · Service: 5/5 · Atmosphere: 5/5</span>
               </div>
 
@@ -509,7 +519,7 @@
                   </div>
                 </div>
                 <div class="review-card__stars">★★★★★</div>
-                <p class="review-card__text">Excellent Service and Care at Croydon Bakehouse! The staff were incredibly friendly. What really stood out was how kind and attentive they were towards elderly customers — taking the time to chat, help with orders, and make everyone feel welcome. The food was delicious too!</p>
+                <p class="review-card__text">Excellent Service and Care at Croydon Bakehouse! The staff were incredibly friendly. What really stood out was how kind and attentive they were towards elderly customers, taking the time to chat, help with orders, and make everyone feel welcome. The food was delicious too!</p>
                 <span class="review-card__tag">Food: 5/5 · Service: 5/5 · Atmosphere: 5/5</span>
               </div>
 
@@ -548,7 +558,7 @@
                   </div>
                 </div>
                 <div class="review-card__stars">★★★★★</div>
-                <p class="review-card__text">I must say best banh mi roll and the lady was prepared — that area is fully cleaned and looks so hygienic. Great experience every time.</p>
+                <p class="review-card__text">I must say best banh mi roll and the lady was prepared. That area is fully cleaned and looks so hygienic. Great experience every time.</p>
                 <span class="review-card__tag">Dine in · $20–40</span>
               </div>
 
@@ -581,6 +591,7 @@
             <li><i data-lucide="map-pin" aria-hidden="true"></i><div><strong>Address</strong><span>150 Main Street, Croydon VIC 3136</span></div></li>
             <li><i data-lucide="phone" aria-hidden="true"></i><div><strong>Phone</strong><a href="tel:0397253161">03 9725 3161</a></div></li>
             <li><i data-lucide="clock" aria-hidden="true"></i><div><strong>Trading Hours</strong><span>Mon – Sat: 6:00 AM – 5:30 PM</span><span>Sunday: 7:00 AM – 3:00 PM</span></div></li>
+            <li><i data-lucide="truck" aria-hidden="true"></i><div><strong>Delivery</strong><span>Melbourne-wide delivery available</span><span>Enquire for your suburb &amp; schedule</span></div></li>
             <li><i data-lucide="facebook" aria-hidden="true"></i><div><strong>Facebook</strong><a href="https://www.facebook.com/croydonbakehouse" target="_blank" rel="noopener noreferrer">@croydonbakehouse</a></div></li>
             <li><i data-lucide="instagram" aria-hidden="true"></i><div><strong>Instagram</strong><a href="https://www.instagram.com/croydonbakehouse/" target="_blank" rel="noopener noreferrer">@croydonbakehouse</a></div></li>
           </ul>
@@ -598,7 +609,7 @@
     <div class="container footer__inner">
       <div class="footer__brand">
         <span class="logo-wordmark logo-wordmark--lg">Croydon Bake House</span>
-        <p>Premium wholesale bakery in Croydon, VIC. Supplying cafes, restaurants and businesses across Melbourne's east.</p>
+        <p>Premium wholesale bakery in Croydon, VIC. Delivering fresh baked goods to cafes, restaurants and businesses all across Melbourne.</p>
         <a href="https://www.facebook.com/croydonbakehouse" target="_blank" rel="noopener noreferrer" class="footer__social" aria-label="Facebook"><i data-lucide="facebook" aria-hidden="true"></i></a>
         <a href="https://www.instagram.com/croydonbakehouse/" target="_blank" rel="noopener noreferrer" class="footer__social" aria-label="Instagram"><i data-lucide="instagram" aria-hidden="true"></i></a>
       </div>
