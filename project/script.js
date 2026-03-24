@@ -5,7 +5,8 @@
 /* ── Product Data ────────────────────────── */
 const PRODUCTS = {
   pie: {
-    label: 'Pies & Pasties',
+    label: 'Pies',
+    hero: 'images/Google/steak_cheese_pie.jpg',
     items: [
       { name: 'Plain Pie',            img: 'images/Google/plain_pie.jpg',            tag: 'Pie' },
       { name: 'Steak Cheese Pie',     img: 'images/Google/steak_cheese_pie.jpg',     tag: 'Pie' },
@@ -16,19 +17,21 @@ const PRODUCTS = {
       { name: 'Steak & Curry Pie',    img: 'images/Google/steak_curry_pie.jpg',      tag: 'Pie' },
       { name: 'Steak Chilli Pie',     img: 'images/Google/steak_chilli_pie.jpg',     tag: 'Pie' },
       { name: 'Butter Chicken Pie',   img: 'images/Google/butter_chicken_pie.jpg',   tag: 'Pie' },
-      { name: 'Meat Pastie (Beef)',   img: 'images/Google/meat_pastie_beef.webp',    tag: 'Pastie' },
-      { name: 'Vegetable Pastie',     img: 'images/Google/vegetable_pastie.jpg',     tag: 'Pastie' },
     ]
   },
-  roll: {
-    label: 'Rolls',
+  pastry: {
+    label: 'Pastries',
+    hero: 'images/Google/meat_pastie_beef.webp',
     items: [
-      { name: 'Sausage Roll',           img: 'images/Google/sausage_roll.jpg',           tag: 'Roll' },
-      { name: 'Spinach Ricotta Rolls',  img: 'images/Google/spinach_ricotta_rolls.webp', tag: 'Roll' },
+      { name: 'Meat Pastie (Beef)',    img: 'images/Google/meat_pastie_beef.webp',    tag: 'Pastie' },
+      { name: 'Vegetable Pastie',      img: 'images/Google/vegetable_pastie.jpg',     tag: 'Pastie' },
+      { name: 'Sausage Roll',          img: 'images/Google/sausage_roll.jpg',          tag: 'Roll' },
+      { name: 'Spinach Ricotta Rolls', img: 'images/Google/spinach_ricotta_rolls.webp', tag: 'Roll' },
     ]
   },
   slice: {
     label: 'Slices',
+    hero: 'images/Google/vanilla_slice.jpg',
     items: [
       { name: 'Vanilla Slice',          img: 'images/Google/vanilla_slice.jpg',         tag: 'Slice' },
       { name: 'Raspberry Jelly Slice',  img: 'images/Google/raspberry_jelly_slice.jpg', tag: 'Slice' },
@@ -44,6 +47,7 @@ const PRODUCTS = {
   },
   cake: {
     label: 'Cakes',
+    hero: 'images/Google/banana_cake.jpg',
     items: [
       { name: 'Banana Cake',  img: 'images/Google/banana_cake.jpg',   tag: 'Cake' },
       { name: 'Banana Bread', img: 'images/Google/banana_bread.webp', tag: 'Cake' },
@@ -51,29 +55,9 @@ const PRODUCTS = {
       { name: 'Apple Cake',   img: 'images/Google/apple_cake.jpg',    tag: 'Cake' },
     ]
   },
-  scroll: {
-    label: 'Scrolls',
-    items: [
-      { name: 'Apple Scroll',              img: 'images/Google/apple_scroll.jpg',  tag: 'Scroll' },
-      { name: 'Coffee Scroll',             img: 'images/Google/coffee_scroll.jpg', tag: 'Scroll' },
-      { name: 'Cheese & Vegemite Scroll',  img: 'images/Google/apple_scroll.jpg',  tag: 'Scroll' },
-    ]
-  },
-  quiche: {
-    label: 'Quiche',
-    items: [
-      { name: 'Egg & Bacon Quiche', img: 'images/Google/egg_bacon_quiche.jpg', tag: 'Quiche' },
-      { name: 'Spinach Quiche',     img: 'images/Google/spinach_quiche.jpg',   tag: 'Quiche' },
-    ]
-  },
-  donut: {
-    label: 'Donuts',
-    items: [
-      { name: 'Fresh Donuts', img: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=400&h=300&fit=crop&q=80', tag: 'TBC', note: 'Varieties coming soon. Enquire for details.' },
-    ]
-  },
   cookie: {
     label: 'Cookies',
+    hero: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=1600&h=700&fit=crop&q=85',
     items: [
       { name: 'Fresh Cookies', img: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400&h=300&fit=crop&q=80', tag: 'TBC', note: 'Varieties coming soon. Enquire for details.' },
     ]
@@ -97,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initReveal();
   initCountUp();
   initCustomerTypeToggle();
-  initCategoryDrawer();
+  initCategoryPage();
   initBentoGallery();
   initReviewsCarousel();
   initEnquiryForm();
@@ -255,98 +239,65 @@ function initCustomerTypeToggle() {
   });
 }
 
-/* ── Category Cards + Product Drawer (Change 3) */
-function initCategoryDrawer() {
-  const catCards  = document.querySelectorAll('.cat-card');
-  const drawer    = document.getElementById('productDrawer');
-  const grid      = document.getElementById('productGrid');
-  const titleEl   = document.getElementById('drawerTitle');
-  const closeBtn  = document.getElementById('drawerClose');
+/* ── Category Landing Page ───────────────── */
+function initCategoryPage() {
+  const grid = document.getElementById('categoryProductGrid');
+  if (!grid) return;
 
-  let activeCard  = null;
+  const params = new URLSearchParams(window.location.search);
+  const cat    = params.get('cat');
+  const data   = PRODUCTS[cat];
 
-  function buildProductGrid(cat) {
-    const data = PRODUCTS[cat];
-    if (!data || !grid) return;
+  if (!data) {
+    window.location.href = 'index.html#products';
+    return;
+  }
 
-    if (titleEl) titleEl.textContent = data.label;
+  // Update page title + meta
+  document.title = `${data.label} | Croydon Bake House`;
 
-    grid.innerHTML = data.items.map(item => `
-      <div class="product-card">
-        <div class="product-card__img-wrap">
-          <img src="${item.img}" alt="${item.name}" loading="lazy" width="400" height="300" />
-        </div>
-        <div class="product-card__body">
-          <h3>${item.name}</h3>
-          <span class="product-tag ${item.tag === 'TBC' ? 'product-tag--coming' : ''}">${item.tag}</span>
-          <button class="product-card__add" data-name="${item.name}" data-img="${item.img}" data-cat="${data.label}" aria-label="Add ${item.name} to cart">
-            <i data-lucide="shopping-cart" aria-hidden="true"></i> Add to Cart
-          </button>
-        </div>
+  // Set hero background
+  const hero = document.getElementById('catPageHero');
+  if (hero && data.hero) hero.style.backgroundImage = `url('${data.hero}')`;
+
+  // Set heading + count
+  const titleEls = document.querySelectorAll('.js-cat-title');
+  titleEls.forEach(el => { el.textContent = data.label; });
+  const countEl = document.getElementById('catPageCount');
+  if (countEl) countEl.textContent = `${data.items.length} ${data.items.length === 1 ? 'variety' : 'varieties'}`;
+
+  // Build product grid
+  grid.innerHTML = data.items.map(item => `
+    <div class="product-card">
+      <div class="product-card__img-wrap">
+        <img src="${item.img}" alt="${item.name}" loading="lazy" width="400" height="300" />
       </div>
-    `).join('');
+      <div class="product-card__body">
+        <h3>${item.name}</h3>
+        <span class="product-tag ${item.tag === 'TBC' ? 'product-tag--coming' : ''}">${item.tag}</span>
+        ${item.note ? `<p class="product-note">${item.note}</p>` : ''}
+        <button class="product-card__add" data-name="${item.name}" data-img="${item.img}" data-cat="${data.label}" aria-label="Add ${item.name} to cart">
+          <i data-lucide="shopping-cart" aria-hidden="true"></i> Add to Cart
+        </button>
+      </div>
+    </div>
+  `).join('');
 
-    // Re-init Lucide
-    if (typeof lucide !== 'undefined') lucide.createIcons();
+  if (typeof lucide !== 'undefined') lucide.createIcons();
 
-    // Bind add-to-cart buttons
-    grid.querySelectorAll('.product-card__add').forEach(btn => {
-      btn.addEventListener('click', () => {
-        addToCart({ name: btn.dataset.name, img: btn.dataset.img, category: btn.dataset.cat });
-        btn.classList.add('added');
-        btn.innerHTML = '<i data-lucide="check" aria-hidden="true"></i> Added!';
+  grid.querySelectorAll('.product-card__add').forEach(btn => {
+    btn.addEventListener('click', () => {
+      addToCart({ name: btn.dataset.name, img: btn.dataset.img, category: btn.dataset.cat });
+      btn.classList.add('added');
+      btn.innerHTML = '<i data-lucide="check" aria-hidden="true"></i> Added!';
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+      setTimeout(() => {
+        btn.classList.remove('added');
+        btn.innerHTML = '<i data-lucide="shopping-cart" aria-hidden="true"></i> Add to Cart';
         if (typeof lucide !== 'undefined') lucide.createIcons();
-        setTimeout(() => {
-          btn.classList.remove('added');
-          btn.innerHTML = '<i data-lucide="shopping-cart" aria-hidden="true"></i> Add to Cart';
-          if (typeof lucide !== 'undefined') lucide.createIcons();
-        }, 1500);
-      });
+      }, 1500);
     });
-  }
-
-  function openDrawer(card) {
-    const cat = card.dataset.cat;
-
-    // Toggle: click same card again → close
-    if (activeCard === card) {
-      closeDrawer();
-      return;
-    }
-
-    // Deactivate previous
-    catCards.forEach(c => { c.classList.remove('is-active'); c.setAttribute('aria-expanded', 'false'); });
-
-    // Activate new
-    card.classList.add('is-active');
-    card.setAttribute('aria-expanded', 'true');
-    activeCard = card;
-
-    // Build content
-    buildProductGrid(cat);
-
-    // Open drawer
-    if (drawer) drawer.classList.add('is-open');
-
-    // Scroll drawer into view smoothly
-    setTimeout(() => {
-      if (drawer) drawer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }, 80);
-  }
-
-  function closeDrawer() {
-    catCards.forEach(c => { c.classList.remove('is-active'); c.setAttribute('aria-expanded', 'false'); });
-    if (drawer) drawer.classList.remove('is-open');
-    if (grid) grid.innerHTML = '';
-    activeCard = null;
-  }
-
-  catCards.forEach(card => {
-    card.addEventListener('click', () => openDrawer(card));
-    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDrawer(card); } });
   });
-
-  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
 }
 
 /* ── Bento Gallery ───────────────────────── */

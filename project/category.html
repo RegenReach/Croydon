@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Browse our fresh baked goods by category. Croydon Bake House — premium wholesale bakery in Croydon, VIC." />
+  <title>Products | Croydon Bake House</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar__inner">
+      <a href="index.html" class="navbar__logo" aria-label="Croydon Bake House Home">
+        <span class="logo-wordmark">Croydon Bake House</span>
+      </a>
+      <nav class="navbar__nav" id="navMenu" aria-label="Main navigation">
+        <a href="index.html#enquire" class="nav-link">Enquire</a>
+        <a href="index.html#about" class="nav-link">About</a>
+        <a href="index.html#products" class="nav-link">Products</a>
+        <a href="index.html#gallery" class="nav-link">Gallery</a>
+        <a href="index.html#blog" class="nav-link">Blog</a>
+        <a href="index.html#contact" class="nav-link">Contact</a>
+      </nav>
+      <div class="navbar__actions">
+        <a href="tel:0397253161" class="btn btn--gold btn--sm nav-cta nav-cta--call"><i data-lucide="phone" aria-hidden="true"></i> <span class="call-label">Call Us</span></a>
+        <a href="cart.html" class="navbar__cart" id="cartLink" aria-label="View cart">
+          <i data-lucide="shopping-cart" aria-hidden="true"></i>
+          <span class="cart-badge" id="cartBadge" hidden>0</span>
+        </a>
+        <button class="navbar__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <div class="cat-page-hero" id="catPageHero">
+      <div class="cat-page-hero__overlay"></div>
+      <div class="container cat-page-hero__content">
+        <nav class="cat-page-breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a>
+          <span aria-hidden="true">›</span>
+          <a href="index.html#products">Products</a>
+          <span aria-hidden="true">›</span>
+          <span class="js-cat-title" aria-current="page"></span>
+        </nav>
+        <span class="cat-page-hero__label">Our Range</span>
+        <h1 class="cat-page-hero__title js-cat-title"></h1>
+        <p class="cat-page-hero__count" id="catPageCount"></p>
+      </div>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div class="cat-page-body">
+      <div class="container">
+
+        <div class="product-grid" id="categoryProductGrid">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="products__cta reveal">
+          <p>Don't see what you're after? We can accommodate custom orders.</p>
+          <a href="index.html#enquire" class="btn btn--gold btn--shine">Enquire About Custom Orders</a>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <span class="logo-wordmark logo-wordmark--lg">Croydon Bake House</span>
+        <p>Premium wholesale bakery in Croydon, VIC. Delivering fresh baked goods to cafes, restaurants and businesses all across Melbourne.</p>
+        <a href="https://www.facebook.com/croydonbakehouse" target="_blank" rel="noopener noreferrer" class="footer__social" aria-label="Facebook"><i data-lucide="facebook" aria-hidden="true"></i></a>
+        <a href="https://www.instagram.com/croydonbakehouse/" target="_blank" rel="noopener noreferrer" class="footer__social" aria-label="Instagram"><i data-lucide="instagram" aria-hidden="true"></i></a>
+      </div>
+      <div class="footer__links"><h4>Navigation</h4><ul><li><a href="index.html#enquire">Wholesale Enquiry</a></li><li><a href="index.html#about">About Us</a></li><li><a href="index.html#products">Products</a></li><li><a href="index.html#gallery">Gallery</a></li><li><a href="index.html#blog">Blog</a></li><li><a href="index.html#contact">Contact</a></li></ul></div>
+      <div class="footer__links"><h4>Products</h4><ul><li><a href="category.html?cat=pie">Pies</a></li><li><a href="category.html?cat=pastry">Pastries</a></li><li><a href="category.html?cat=slice">Slices</a></li><li><a href="category.html?cat=cake">Cakes</a></li><li><a href="category.html?cat=cookie">Cookies</a></li></ul></div>
+      <div class="footer__contact"><h4>Contact</h4><p>150 Main Street<br />Croydon VIC 3136</p><a href="tel:0397253161">03 9725 3161</a><p class="footer__hours">Mon–Sat: 6:00 AM – 5:30 PM<br />Sun: 7:00 AM – 3:00 PM</p></div>
+    </div>
+    <div class="footer__bottom"><div class="container"><p>&copy; <span id="footerYear"></span> Croydon Bake House. All rights reserved.</p><p>150 Main Street, Croydon VIC 3136 · 03 9725 3161</p></div></div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to top"><i data-lucide="chevron-up" aria-hidden="true"></i></button>
+  <script src="script.js"></script>
+</body>
+</html>
