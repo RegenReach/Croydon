@@ -51,7 +51,7 @@
       <div class="cart-layout">
 
         <!-- LEFT: Cart Items -->
-        <div>
+        <div id="cartItemsCol">
           <div class="cart-items" id="cartItemsPanel">
             <!-- Populated by JS -->
           </div>
@@ -65,8 +65,10 @@
         <!-- RIGHT: Quote Form -->
         <div class="cart-sidebar">
           <div class="quote-panel">
-            <h2>Request a Quote</h2>
-            <p>We'll get back to you within one business day with pricing and availability.</p>
+            <div id="quotePanelHeader">
+              <h2>Request a Quote</h2>
+              <p>We'll get back to you within one business day with pricing and availability.</p>
+            </div>
 
             <!-- Dynamic summary of selected items -->
             <div class="quote-summary" id="quoteSummary">
@@ -140,6 +142,7 @@
               <i data-lucide="check-circle-2" aria-hidden="true"></i>
               <strong>Quote request sent!</strong>
               <p>Your enquiry has been received. We'll be in touch within one business day.</p>
+              <a href="index.html#products" class="btn btn--primary btn--sm" style="margin-top:0.5rem;">Back to Products</a>
             </div>
           </div>
         </div>
@@ -334,13 +337,16 @@
 
         await new Promise(r => setTimeout(r, 1200));
 
-        // Hide form and summary, show success in their place
+        // Hide form, summary and panel header, show success in their place
         form.hidden = true;
         document.getElementById('quoteSummary').hidden = true;
+        document.getElementById('quotePanelHeader').hidden = true;
 
-        // Clear cart after successful quote
+        // Clear cart and hide the left column — it's empty and irrelevant after submission
         saveCart([]);
         renderCart();
+        document.getElementById('cartItemsCol').hidden = true;
+        document.querySelector('.cart-layout').classList.add('is-success');
 
         const success = document.getElementById('quoteSuccess');
         success.hidden = false;
