@@ -38,8 +38,24 @@ Build a warm, professional, mobile-first website for Croydon Bake House that dri
 ---
 
 ## Pending Discovery Answers
-1. North Star — singular desired outcome?
-2. Integrations — Uber Eats embed? Online ordering? Booking? Social feeds?
-3. Source of Truth — Where does menu/content live? Google Sheet? Manual?
-4. Delivery Payload — Host on Vercel? Custom domain? Static site?
-5. Behavioral Rules — Tone, "Do Not" rules, logo/brand assets available?
+1. North Star — singular desired outcome? ✅ Drive wholesale enquiries + individual pickup orders
+2. Integrations — Stripe (Apple/Google Pay) ✅ + EmailJS ✅ + Google Maps ✅
+3. Source of Truth — products CSV ✅, prices TBC from owner
+4. Delivery Payload — Netlify static site ✅ (netlify.toml created)
+5. Behavioral Rules — Warm B2B tone, no prices shown (wholesale model) ✅
+
+---
+
+## Phase 5: T — Trigger (Owner Action Required)
+
+Before deploying:
+- [ ] Confirm establishment year (replace 1998 placeholder)
+- [ ] Confirm product prices (replace placeholder values in script.js PRODUCTS)
+- [ ] Create Stripe account → get publishable + secret keys
+- [ ] Register for Google Pay console (pay.google.com/business/console)
+- [ ] Set up Apple Pay domain verification via Stripe dashboard
+- [ ] Create EmailJS account → service + template → get 3 IDs
+- [ ] Deploy to Netlify → set STRIPE_SECRET_KEY env var
+- [ ] Run `npm install stripe` in project root (for Netlify Function)
+- [ ] Test Apple Pay on Safari/iPhone over HTTPS
+- [ ] Test Google Pay on Chrome over HTTPS
