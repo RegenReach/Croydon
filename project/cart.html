@@ -142,12 +142,31 @@
                 <input type="tel" id="qPhone" name="phone" autocomplete="tel" placeholder="04XX XXX XXX" required />
                 <span class="form-error" id="qPhoneError" role="alert" aria-live="polite"></span>
               </div>
+              <!-- Checkout step indicator — individual only -->
+              <div class="checkout-steps" id="checkoutSteps" style="display:none;" aria-label="Checkout progress">
+                <div class="checkout-step is-active" id="checkoutStep1">
+                  <span class="checkout-step__num">1</span> Your Details
+                </div>
+                <div class="checkout-step__arrow" aria-hidden="true">→</div>
+                <div class="checkout-step" id="checkoutStep2">
+                  <span class="checkout-step__num">2</span> Payment
+                </div>
+              </div>
+
               <div class="form-group">
                 <label for="qMessage">Additional Notes</label>
                 <textarea id="qMessage" name="message" rows="3" placeholder="Special requirements, pickup date preference…"></textarea>
               </div>
 
-              <!-- INDIVIDUAL: Stripe payment panel (shown for individual type) -->
+              <!-- INDIVIDUAL: Proceed to payment button (shown first, gates Stripe) -->
+              <button type="button" class="btn btn--primary btn--full btn--shine" id="proceedToPayBtn" style="display:none;">
+                <i data-lucide="lock" aria-hidden="true"></i> Proceed to Payment
+              </button>
+              <p class="secure-badge" id="secureBadge" style="display:none;">
+                <i data-lucide="shield-check" aria-hidden="true"></i> Secure checkout powered by Stripe
+              </p>
+
+              <!-- INDIVIDUAL: Stripe payment panel (hidden until user proceeds) -->
               <div id="stripePaymentSection" style="display:none;">
                 <div class="stripe-payment-panel">
                   <div class="stripe-payment-panel__total">
@@ -357,6 +376,11 @@
       const abnGroup          = document.getElementById('qAbnGroup');
       const abnInput          = document.getElementById('qAbn');
       const stripeSection     = document.getElementById('stripePaymentSection');
+      const proceedToPayBtn   = document.getElementById('proceedToPayBtn');
+      const secureBadge       = document.getElementById('secureBadge');
+      const checkoutSteps     = document.getElementById('checkoutSteps');
+      const step1             = document.getElementById('checkoutStep1');
+      const step2             = document.getElementById('checkoutStep2');
       const submitBtn         = document.getElementById('quoteSubmitBtn');
       const messageField      = document.getElementById('qMessage');
 
@@ -465,15 +489,25 @@
       function applyCustomerType(type) {
         const isBusiness = type === 'business';
 
-        // Show/hide business-only fields
+        // Business-only fields
         if (businessGroup) { businessGroup.style.display = isBusiness ? '' : 'none'; if (businessInput) businessInput.required = isBusiness; }
-        if (abnGroup)       { abnGroup.style.display = isBusiness ? '' : 'none'; if (abnInput) abnInput.required = isBusiness; }
+        if (abnGroup)       { abnGroup.style.display       = isBusiness ? '' : 'none'; if (abnInput) abnInput.required = isBusiness; }
 
-        // Show/hide payment vs submit
-        if (stripeSection) stripeSection.style.display = isBusiness ? 'none' : '';
-        if (submitBtn)     submitBtn.style.display      = isBusiness ? '' : 'none';
+        // Step indicator — individual only
+        if (checkoutSteps) checkoutSteps.style.display = isBusiness ? 'none' : '';
 
-        // Update page headers
+        // For individual: show proceed button, hide payment panel (user must click to proceed)
+        // For business: show submit button, hide both payment and proceed
+        if (stripeSection)   stripeSection.style.display  = 'none'; // always hidden until proceed clicked
+        if (proceedToPayBtn) proceedToPayBtn.style.display = isBusiness ? 'none' : '';
+        if (secureBadge)     secureBadge.style.display     = isBusiness ? 'none' : '';
+        if (submitBtn)       submitBtn.style.display        = isBusiness ? '' : 'none';
+
+        // Reset proceed step back to step 1 if user switches type
+        if (step1) step1.classList.add('is-active');
+        if (step2) step2.classList.remove('is-active');
+
+        // Page/panel copy
         if (isBusiness) {
           if (pageLabel)  pageLabel.textContent  = 'Wholesale Enquiry';
           if (pageTitle)  pageTitle.textContent  = 'Your Quote Request';
@@ -484,20 +518,46 @@
         } else {
           if (pageLabel)  pageLabel.textContent  = 'Individual Order';
           if (pageTitle)  pageTitle.textContent  = 'Place Your Order';
-          if (pageDesc)   pageDesc.textContent   = 'Select your items, fill in your details, and pay securely for pickup at our Croydon store.';
-          if (panelTitle) panelTitle.textContent = 'Pay & Pick Up';
-          if (panelDesc)  panelDesc.textContent  = 'Pay securely via Apple Pay or Google Pay. Your order will be ready for pickup.';
+          if (pageDesc)   pageDesc.textContent   = 'Select your items, fill in your details, then proceed to pay securely for pickup.';
+          if (panelTitle) panelTitle.textContent = 'Your Details';
+          if (panelDesc)  panelDesc.textContent  = 'Fill in your contact details below, then proceed to pay via Apple Pay or Google Pay.';
           if (messageField) messageField.placeholder = 'Preferred pickup time, special requirements…';
+        }
+      }
+
+      // ── Proceed to Payment button ───────────────────────────────────────
+      if (proceedToPayBtn) {
+        proceedToPayBtn.addEventListener('click', () => {
+          if (!validateContactFields()) return;
+
+          // Move to step 2
+          if (step1) step1.classList.remove('is-active');
+          if (step2) step2.classList.add('is-active');
+          if (panelTitle) panelTitle.textContent = 'Pay & Pick Up';
+          if (panelDesc)  panelDesc.textContent  = 'Review your order total and pay securely via Apple Pay or Google Pay.';
+
+          // Reveal payment section
+          proceedToPayBtn.style.display = 'none';
+          if (secureBadge) secureBadge.style.display = 'none';
+          stripeSection.style.display   = '';
+
+          // Init Stripe now (lazy — only when user actually reaches payment step)
           initStripe();
           refreshStripeAmount();
-        }
+
+          stripeSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
       }
 
       // Run on load (default is individual)
       applyCustomerType('individual');
 
       radios.forEach(radio => {
-        radio.addEventListener('change', () => applyCustomerType(radio.value));
+        radio.addEventListener('change', () => {
+          // If switching type, reset payment section state
+          if (stripeSection) stripeSection.style.display = 'none';
+          applyCustomerType(radio.value);
+        });
       });
 
       // ── Field validation ─────────────────────────────────────────────────
