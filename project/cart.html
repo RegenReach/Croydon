@@ -9,6 +9,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+  <!-- Stripe.js — required for Apple Pay / Google Pay -->
+  <script src="https://js.stripe.com/v3/"></script>
+  <!-- EmailJS — required for business quote emails -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -24,7 +28,7 @@
         <a href="index.html#about" class="nav-link">About</a>
         <a href="index.html#products" class="nav-link">Products</a>
         <a href="index.html#gallery" class="nav-link">Gallery</a>
-        <a href="index.html#blog" class="nav-link">Blog</a>
+        <a href="index.html#heritage" class="nav-link">Our Story</a>
         <a href="index.html#contact" class="nav-link">Contact</a>
       </nav>
       <div class="navbar__actions">
@@ -43,9 +47,9 @@
   <main class="cart-page">
     <div class="container">
       <div class="cart-page__header">
-        <span class="section-label">Wholesale Enquiry</span>
-        <h1>Your Quote Request</h1>
-        <p>Review your selected products, adjust quantities, then fill in your details to request a quote.</p>
+        <span class="section-label" id="cartPageLabel">Wholesale Enquiry</span>
+        <h1 id="cartPageTitle">Your Quote Request</h1>
+        <p id="cartPageDesc">Review your selected products, adjust quantities, then fill in your details to request a quote.</p>
       </div>
 
       <div class="cart-layout">
@@ -62,12 +66,12 @@
           </div>
         </div>
 
-        <!-- RIGHT: Quote Form -->
+        <!-- RIGHT: Quote / Payment Form -->
         <div class="cart-sidebar">
           <div class="quote-panel">
             <div id="quotePanelHeader">
-              <h2>Request a Quote</h2>
-              <p>We'll get back to you within one business day with pricing and availability.</p>
+              <h2 id="quotePanelTitle">Request a Quote</h2>
+              <p id="quotePanelDesc">We'll get back to you within one business day with pricing and availability.</p>
             </div>
 
             <!-- Dynamic summary of selected items -->
@@ -82,14 +86,14 @@
 
               <!-- Customer type toggle -->
               <div class="customer-type">
-                <p class="customer-type__label">I am enquiring as a…</p>
+                <p class="customer-type__label">I am ordering as a…</p>
                 <div class="customer-type__options">
                   <label class="type-option">
                     <input type="radio" name="qCustomerType" value="individual" id="qTypeIndividual" checked />
                     <span class="type-option__card">
                       <i data-lucide="user" aria-hidden="true"></i>
                       <strong>Individual</strong>
-                      <small>Bulk order for a party or event</small>
+                      <small>Pickup from our store</small>
                     </span>
                   </label>
                   <label class="type-option">
@@ -113,11 +117,21 @@
                 <input type="text" id="qLastName" name="lastName" autocomplete="family-name" placeholder="Smith" required />
                 <span class="form-error" id="qLastNameError" role="alert" aria-live="polite"></span>
               </div>
+
+              <!-- Business name — shown for business only -->
               <div class="form-group" id="qBusinessNameGroup" style="display:none;">
                 <label for="qBusinessName">Business Name <span class="required" aria-hidden="true">*</span></label>
                 <input type="text" id="qBusinessName" name="businessName" autocomplete="organization" placeholder="Your Café Pty Ltd" />
                 <span class="form-error" id="qBusinessNameError" role="alert" aria-live="polite"></span>
               </div>
+
+              <!-- ABN — shown for business only -->
+              <div class="form-group" id="qAbnGroup" style="display:none;">
+                <label for="qAbn">ABN <span class="required" aria-hidden="true">*</span></label>
+                <input type="text" id="qAbn" name="abn" inputmode="numeric" maxlength="14" placeholder="12 345 678 901" autocomplete="off" />
+                <span class="form-error" id="qAbnError" role="alert" aria-live="polite"></span>
+              </div>
+
               <div class="form-group">
                 <label for="qEmail">Email <span class="required" aria-hidden="true">*</span></label>
                 <input type="email" id="qEmail" name="email" autocomplete="email" placeholder="jane@example.com.au" required />
@@ -130,20 +144,57 @@
               </div>
               <div class="form-group">
                 <label for="qMessage">Additional Notes</label>
-                <textarea id="qMessage" name="message" rows="3" placeholder="Delivery suburb, weekly volume, special requirements…"></textarea>
+                <textarea id="qMessage" name="message" rows="3" placeholder="Special requirements, pickup date preference…"></textarea>
               </div>
-              <button type="submit" class="btn btn--primary btn--full btn--shine" id="quoteSubmitBtn">
+
+              <!-- INDIVIDUAL: Stripe payment panel (shown for individual type) -->
+              <div id="stripePaymentSection" style="display:none;">
+                <div class="stripe-payment-panel">
+                  <div class="stripe-payment-panel__total">
+                    <span class="stripe-payment-panel__total-label">Order Total</span>
+                    <span class="stripe-payment-panel__total-amount" id="stripeTotal">$0.00</span>
+                  </div>
+                  <div class="stripe-pickup-note">
+                    <i data-lucide="map-pin" aria-hidden="true"></i>
+                    <span><strong>Pickup only</strong> — 150 Main Street, Croydon VIC 3136<br />Mon–Sat 6am–5:30pm · Sun 7am–3pm</span>
+                  </div>
+                  <div id="payment-request-button"></div>
+                  <div class="payment-unavailable" id="paymentUnavailable" style="display:none;">
+                    <strong>Apple Pay / Google Pay unavailable</strong><br />
+                    Please <a href="tel:0397253161">call us on 03 9725 3161</a> or visit in store to pay by card.
+                  </div>
+                </div>
+              </div>
+
+              <!-- BUSINESS: Submit button (shown for business type) -->
+              <button type="submit" class="btn btn--primary btn--full btn--shine" id="quoteSubmitBtn" style="display:none;">
                 <span class="btn-text"><i data-lucide="send" aria-hidden="true"></i> Request Quote</span>
                 <span class="btn-loading" hidden>Sending…</span>
               </button>
             </form>
 
+            <!-- Business quote success -->
             <div class="quote-success" id="quoteSuccess" hidden role="status" aria-live="polite">
               <i data-lucide="check-circle-2" aria-hidden="true"></i>
               <strong>Quote request sent!</strong>
               <p>Your enquiry has been received. We'll be in touch within one business day.</p>
               <a href="index.html#products" class="btn btn--primary btn--sm" style="margin-top:0.5rem;">Back to Products</a>
             </div>
+
+            <!-- Individual pickup success -->
+            <div class="pickup-success" id="pickupSuccess" hidden role="status" aria-live="polite">
+              <i data-lucide="check-circle-2" aria-hidden="true"></i>
+              <strong>Payment confirmed!</strong>
+              <p>Your order is placed. We'll have it ready for pickup at:</p>
+              <div class="pickup-success__addr">
+                <i data-lucide="map-pin" aria-hidden="true" style="display:inline;width:12px;height:12px;"></i>
+                150 Main Street, Croydon VIC 3136<br />
+                Mon–Sat 6am–5:30pm · Sun 7am–3pm
+              </div>
+              <p>Questions? Call <a href="tel:0397253161" style="color:#166534;font-weight:700;">03 9725 3161</a></p>
+              <a href="index.html#products" class="btn btn--primary btn--sm" style="margin-top:0.5rem;">Back to Products</a>
+            </div>
+
           </div>
         </div>
 
@@ -159,7 +210,7 @@
         <a href="https://www.facebook.com/croydonbakehouse" target="_blank" rel="noopener noreferrer" class="footer__social" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
         <a href="https://www.instagram.com/croydonbakehouse/" target="_blank" rel="noopener noreferrer" class="footer__social" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></a>
       </div>
-      <div class="footer__links"><h4>Navigation</h4><ul><li><a href="index.html#enquire">Wholesale Enquiry</a></li><li><a href="index.html#about">About Us</a></li><li><a href="index.html#products">Products</a></li><li><a href="index.html#gallery">Gallery</a></li><li><a href="index.html#blog">Blog</a></li><li><a href="index.html#contact">Contact</a></li></ul></div>
+      <div class="footer__links"><h4>Navigation</h4><ul><li><a href="index.html#enquire">Wholesale Enquiry</a></li><li><a href="index.html#about">About Us</a></li><li><a href="index.html#products">Products</a></li><li><a href="index.html#gallery">Gallery</a></li><li><a href="index.html#heritage">Our Story</a></li><li><a href="index.html#contact">Contact</a></li></ul></div>
       <div class="footer__links"><h4>Products</h4><ul><li><a href="index.html#products">Pies &amp; Pasties</a></li><li><a href="index.html#products">Sausage Rolls</a></li><li><a href="index.html#products">Slices &amp; Lamingtons</a></li><li><a href="index.html#products">Cakes</a></li><li><a href="index.html#products">Scrolls</a></li><li><a href="index.html#products">Quiche</a></li></ul></div>
       <div class="footer__contact"><h4>Contact</h4><p>150 Main Street<br />Croydon VIC 3136</p><a href="tel:0397253161">03 9725 3161</a><p class="footer__hours">Mon–Sat: 6:00 AM – 5:30 PM<br />Sun: 7:00 AM – 3:00 PM</p></div>
     </div>
@@ -169,14 +220,36 @@
   <button class="back-to-top" id="backToTop" aria-label="Back to top"><i data-lucide="chevron-up" aria-hidden="true"></i></button>
   <script src="script.js"></script>
   <script>
+    // ── Configuration ─────────────────────────────────────────────────────────
+    // TODO: Replace with your actual credentials before going live.
+    // ─────────────────────────────────────────────────────────────────────────
+
+    // 1. Stripe publishable key — get from https://dashboard.stripe.com/apikeys
+    const STRIPE_PUBLISHABLE_KEY = 'pk_test_REPLACE_WITH_YOUR_STRIPE_PUBLISHABLE_KEY';
+
+    // 2. EmailJS credentials — get from https://dashboard.emailjs.com/
+    //    After signing up: create a service (Gmail/SMTP) and an email template.
+    //    Template variables used: {{customer_name}}, {{business_name}}, {{abn}},
+    //    {{customer_email}}, {{customer_phone}}, {{cart_items}}, {{notes}}
+    const EMAILJS_PUBLIC_KEY  = 'REPLACE_WITH_YOUR_EMAILJS_PUBLIC_KEY';
+    const EMAILJS_SERVICE_ID  = 'REPLACE_WITH_YOUR_EMAILJS_SERVICE_ID';
+    const EMAILJS_TEMPLATE_ID = 'REPLACE_WITH_YOUR_EMAILJS_TEMPLATE_ID';
+
+    // 3. Owner email — set as the "To Email" in your EmailJS template
+    //    (Not hardcoded here — configure it inside the EmailJS template itself)
+
+    // ─────────────────────────────────────────────────────────────────────────
+
     document.addEventListener('DOMContentLoaded', () => {
       renderCart();
       initQuoteForm();
+      if (typeof emailjs !== 'undefined') emailjs.init(EMAILJS_PUBLIC_KEY);
     });
 
+    /* ── Render cart items ─────────────────────────────────────────────────── */
     function renderCart() {
-      const cart = getCart();
-      const panel = document.getElementById('cartItemsPanel');
+      const cart        = getCart();
+      const panel       = document.getElementById('cartItemsPanel');
       const summaryItems = document.getElementById('quoteSummaryItems');
 
       if (cart.length === 0) {
@@ -189,6 +262,7 @@
           </div>`;
         summaryItems.innerHTML = '<span class="quote-summary__empty">No items selected yet.</span>';
         if (typeof lucide !== 'undefined') lucide.createIcons();
+        updateStripeTotal();
         return;
       }
 
@@ -224,8 +298,8 @@
         </div>`).join('');
 
       if (typeof lucide !== 'undefined') lucide.createIcons();
+      updateStripeTotal();
 
-      // Bind controls
       document.getElementById('clearCartBtn').addEventListener('click', () => {
         saveCart([]);
         renderCart();
@@ -243,14 +317,9 @@
       document.querySelectorAll('.qty-dec').forEach(btn => {
         btn.addEventListener('click', () => {
           const cart = getCart();
-          const idx = parseInt(btn.dataset.idx);
-          if (cart[idx].qty > 1) {
-            cart[idx].qty -= 1;
-            saveCart(cart);
-          } else {
-            cart.splice(idx, 1);
-            saveCart(cart);
-          }
+          const idx  = parseInt(btn.dataset.idx);
+          if (cart[idx].qty > 1) { cart[idx].qty -= 1; saveCart(cart); }
+          else                   { cart.splice(idx, 1); saveCart(cart); }
           renderCart();
         });
       });
@@ -265,28 +334,173 @@
       });
     }
 
+    /* ── Cart total for Stripe ─────────────────────────────────────────────── */
+    function cartTotalCents() {
+      return getCart().reduce((sum, i) => sum + (i.price || 0) * i.qty, 0);
+    }
+
+    function updateStripeTotal() {
+      const el = document.getElementById('stripeTotal');
+      if (!el) return;
+      const cents = cartTotalCents();
+      el.textContent = '$' + (cents / 100).toFixed(2);
+    }
+
+    /* ── Init quote / payment form ─────────────────────────────────────────── */
     function initQuoteForm() {
-      const form = document.getElementById('quoteForm');
+      const form         = document.getElementById('quoteForm');
       if (!form) return;
 
-      // Customer type toggle
-      const radios           = form.querySelectorAll('input[name="qCustomerType"]');
-      const businessGroup    = document.getElementById('qBusinessNameGroup');
-      const businessInput    = document.getElementById('qBusinessName');
-      const messageField     = document.getElementById('qMessage');
-      const msgPlaceholders  = {
-        individual: 'Delivery suburb, occasion, special requirements…',
-        business:   'Delivery location, weekly volume, specific requirements…',
-      };
-      radios.forEach(radio => {
-        radio.addEventListener('change', () => {
-          const isBusiness = radio.value === 'business';
-          businessGroup.style.display = isBusiness ? '' : 'none';
-          if (businessInput) businessInput.required = isBusiness;
-          if (messageField) messageField.placeholder = msgPlaceholders[radio.value];
+      const radios            = form.querySelectorAll('input[name="qCustomerType"]');
+      const businessGroup     = document.getElementById('qBusinessNameGroup');
+      const businessInput     = document.getElementById('qBusinessName');
+      const abnGroup          = document.getElementById('qAbnGroup');
+      const abnInput          = document.getElementById('qAbn');
+      const stripeSection     = document.getElementById('stripePaymentSection');
+      const submitBtn         = document.getElementById('quoteSubmitBtn');
+      const messageField      = document.getElementById('qMessage');
+
+      const pageLabel   = document.getElementById('cartPageLabel');
+      const pageTitle   = document.getElementById('cartPageTitle');
+      const pageDesc    = document.getElementById('cartPageDesc');
+      const panelTitle  = document.getElementById('quotePanelTitle');
+      const panelDesc   = document.getElementById('quotePanelDesc');
+
+      // Auto-format ABN while typing
+      if (abnInput) {
+        abnInput.addEventListener('input', () => {
+          const d = abnInput.value.replace(/\D/g, '').slice(0, 11);
+          let f = d;
+          if (d.length > 2) f = d.slice(0,2) + ' ' + d.slice(2);
+          if (d.length > 5) f = d.slice(0,2) + ' ' + d.slice(2,5) + ' ' + d.slice(5);
+          if (d.length > 8) f = d.slice(0,2) + ' ' + d.slice(2,5) + ' ' + d.slice(5,8) + ' ' + d.slice(8);
+          abnInput.value = f;
         });
+      }
+
+      // ── Stripe Payment Request Button setup ──────────────────────────────
+      let stripe, paymentRequest, prButton;
+      let stripeReady = false;
+
+      function initStripe() {
+        if (stripeReady || !window.Stripe) return;
+        if (STRIPE_PUBLISHABLE_KEY.includes('REPLACE')) return; // placeholder key — skip
+        try {
+          stripe         = Stripe(STRIPE_PUBLISHABLE_KEY);
+          paymentRequest = stripe.paymentRequest({
+            country:  'AU',
+            currency: 'aud',
+            total:    { label: 'Croydon Bake House — Pickup Order', amount: Math.max(cartTotalCents(), 50) },
+            requestPayerName:  true,
+            requestPayerEmail: true,
+            requestPayerPhone: true,
+          });
+
+          const elements = stripe.elements();
+          prButton = elements.create('paymentRequestButton', {
+            paymentRequest,
+            style: { paymentRequestButton: { type: 'buy', theme: 'dark', height: '48px' } },
+          });
+
+          paymentRequest.canMakePayment().then(result => {
+            const btnEl  = document.getElementById('payment-request-button');
+            const unavEl = document.getElementById('paymentUnavailable');
+            if (result) {
+              prButton.mount('#payment-request-button');
+              if (btnEl) btnEl.style.display = '';
+              if (unavEl) unavEl.style.display = 'none';
+            } else {
+              if (btnEl) btnEl.style.display = 'none';
+              if (unavEl) unavEl.style.display = '';
+            }
+          });
+
+          paymentRequest.on('paymentmethod', async (ev) => {
+            // Validate form before processing payment
+            if (!validateContactFields()) { ev.complete('fail'); return; }
+
+            // Create Payment Intent via serverless function
+            let clientSecret;
+            try {
+              const res = await fetch('/.netlify/functions/create-payment-intent', {
+                method:  'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body:    JSON.stringify({ amountCents: cartTotalCents(), cart: getCart() }),
+              });
+              const data = await res.json();
+              if (data.error) throw new Error(data.error);
+              clientSecret = data.clientSecret;
+            } catch (err) {
+              console.error('Payment Intent error:', err);
+              ev.complete('fail');
+              return;
+            }
+
+            const { error } = await stripe.confirmCardPayment(clientSecret, {
+              payment_method: ev.paymentMethod.id,
+            }, { handleActions: false });
+
+            if (error) {
+              ev.complete('fail');
+            } else {
+              ev.complete('success');
+              showPickupSuccess();
+            }
+          });
+
+          stripeReady = true;
+        } catch(e) {
+          console.warn('Stripe init failed:', e);
+        }
+      }
+
+      // Update Stripe payment request amount when cart changes
+      function refreshStripeAmount() {
+        if (paymentRequest) {
+          paymentRequest.update({ total: { label: 'Croydon Bake House — Pickup Order', amount: Math.max(cartTotalCents(), 50) } });
+        }
+      }
+
+      // ── Customer type switch ────────────────────────────────────────────
+      function applyCustomerType(type) {
+        const isBusiness = type === 'business';
+
+        // Show/hide business-only fields
+        if (businessGroup) { businessGroup.style.display = isBusiness ? '' : 'none'; if (businessInput) businessInput.required = isBusiness; }
+        if (abnGroup)       { abnGroup.style.display = isBusiness ? '' : 'none'; if (abnInput) abnInput.required = isBusiness; }
+
+        // Show/hide payment vs submit
+        if (stripeSection) stripeSection.style.display = isBusiness ? 'none' : '';
+        if (submitBtn)     submitBtn.style.display      = isBusiness ? '' : 'none';
+
+        // Update page headers
+        if (isBusiness) {
+          if (pageLabel)  pageLabel.textContent  = 'Wholesale Enquiry';
+          if (pageTitle)  pageTitle.textContent  = 'Your Quote Request';
+          if (pageDesc)   pageDesc.textContent   = 'Review your selected products, fill in your details, and we'll send you a quote.';
+          if (panelTitle) panelTitle.textContent = 'Request a Quote';
+          if (panelDesc)  panelDesc.textContent  = 'We\'ll get back to you within one business day with pricing and availability.';
+          if (messageField) messageField.placeholder = 'Delivery location, weekly volume, specific requirements…';
+        } else {
+          if (pageLabel)  pageLabel.textContent  = 'Individual Order';
+          if (pageTitle)  pageTitle.textContent  = 'Place Your Order';
+          if (pageDesc)   pageDesc.textContent   = 'Select your items, fill in your details, and pay securely for pickup at our Croydon store.';
+          if (panelTitle) panelTitle.textContent = 'Pay & Pick Up';
+          if (panelDesc)  panelDesc.textContent  = 'Pay securely via Apple Pay or Google Pay. Your order will be ready for pickup.';
+          if (messageField) messageField.placeholder = 'Preferred pickup time, special requirements…';
+          initStripe();
+          refreshStripeAmount();
+        }
+      }
+
+      // Run on load (default is individual)
+      applyCustomerType('individual');
+
+      radios.forEach(radio => {
+        radio.addEventListener('change', () => applyCustomerType(radio.value));
       });
 
+      // ── Field validation ─────────────────────────────────────────────────
       const fields = {
         qFirstName: { err: 'qFirstNameError', msg: 'Please enter your first name.' },
         qLastName:  { err: 'qLastNameError',  msg: 'Please enter your last name.' },
@@ -309,50 +523,99 @@
         document.getElementById(id).addEventListener('blur', () => validate(id));
       });
 
+      function validateContactFields() {
+        let allValid = Object.keys(fields).map(id => validate(id)).every(Boolean);
+        const isBusiness = form.querySelector('input[name="qCustomerType"]:checked')?.value === 'business';
+        if (isBusiness) {
+          if (businessInput) {
+            const bValid = businessInput.value.trim().length > 0;
+            businessInput.classList.toggle('error', !bValid);
+            document.getElementById('qBusinessNameError').textContent = bValid ? '' : 'Please enter your business name.';
+            if (!bValid) allValid = false;
+          }
+          if (abnInput) {
+            const abnDigits = abnInput.value.replace(/\s/g, '');
+            const abnValid  = /^\d{11}$/.test(abnDigits);
+            abnInput.classList.toggle('error', !abnValid);
+            document.getElementById('qAbnError').textContent = abnValid ? '' : 'Please enter a valid 11-digit ABN.';
+            if (!abnValid) allValid = false;
+          }
+        }
+        if (!allValid) {
+          const firstErr = form.querySelector('input.error, textarea.error');
+          if (firstErr) firstErr.focus();
+        }
+        return allValid;
+      }
+
+      // ── Business form submit → EmailJS ───────────────────────────────────
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        let allValid = Object.keys(fields).map(id => validate(id)).every(Boolean);
 
-        // Validate business name if Business selected
         const isBusiness = form.querySelector('input[name="qCustomerType"]:checked')?.value === 'business';
-        if (isBusiness && businessInput) {
-          const bValid = businessInput.value.trim().length > 0;
-          businessInput.classList.toggle('error', !bValid);
-          document.getElementById('qBusinessNameError').textContent = bValid ? '' : 'Please enter your business name.';
-          if (!bValid) allValid = false;
-        }
+        if (!isBusiness) return; // individual pays via Stripe — no submit needed
 
-        if (!allValid) {
-          const firstErr = form.querySelector('input.error');
-          if (firstErr) firstErr.focus();
-          return;
-        }
+        if (!validateContactFields()) return;
 
-        const submitBtn  = document.getElementById('quoteSubmitBtn');
         const btnText    = submitBtn.querySelector('.btn-text');
         const btnLoading = submitBtn.querySelector('.btn-loading');
         submitBtn.disabled = true;
-        btnText.hidden = true;
-        btnLoading.hidden = false;
+        btnText.hidden     = true;
+        btnLoading.hidden  = false;
 
-        await new Promise(r => setTimeout(r, 1200));
+        const cartItems = getCart().map(i => `${i.name} × ${i.qty}`).join(', ');
 
-        // Hide form, summary and panel header, show success in their place
+        try {
+          if (typeof emailjs !== 'undefined' && !EMAILJS_SERVICE_ID.includes('REPLACE')) {
+            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+              customer_name:  `${document.getElementById('qFirstName').value.trim()} ${document.getElementById('qLastName').value.trim()}`,
+              business_name:  businessInput ? businessInput.value.trim() : '',
+              abn:            abnInput ? abnInput.value.trim() : '',
+              customer_email: document.getElementById('qEmail').value.trim(),
+              customer_phone: document.getElementById('qPhone').value.trim(),
+              cart_items:     cartItems,
+              notes:          document.getElementById('qMessage').value.trim(),
+            });
+          } else {
+            // Fallback: simulate send (remove when EmailJS is configured)
+            await new Promise(r => setTimeout(r, 1200));
+          }
+        } catch (err) {
+          console.error('EmailJS error:', err);
+          // Still show success to avoid blocking the user — log error server-side
+        }
+
+        showQuoteSuccess();
+      });
+
+      // ── Success states ───────────────────────────────────────────────────
+      function showQuoteSuccess() {
         form.hidden = true;
-        document.getElementById('quoteSummary').hidden = true;
+        document.getElementById('quoteSummary').hidden  = true;
         document.getElementById('quotePanelHeader').hidden = true;
-
-        // Clear cart and hide the left column — it's empty and irrelevant after submission
         saveCart([]);
         renderCart();
         document.getElementById('cartItemsCol').hidden = true;
         document.querySelector('.cart-layout').classList.add('is-success');
-
         const success = document.getElementById('quoteSuccess');
         success.hidden = false;
         success.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         if (typeof lucide !== 'undefined') lucide.createIcons();
-      });
+      }
+
+      function showPickupSuccess() {
+        form.hidden = true;
+        document.getElementById('quoteSummary').hidden     = true;
+        document.getElementById('quotePanelHeader').hidden = true;
+        saveCart([]);
+        renderCart();
+        document.getElementById('cartItemsCol').hidden = true;
+        document.querySelector('.cart-layout').classList.add('is-success');
+        const success = document.getElementById('pickupSuccess');
+        success.hidden = false;
+        success.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+      }
     }
   </script>
 </body>

@@ -6,6 +6,7 @@
 const PRODUCTS = {
   pie: {
     label: 'Pies',
+    price: 800, // $8.00 each — placeholder, update with real pricing
     hero: 'images/Google/steak_cheese_pie.jpg',
     items: [
       { name: 'Plain Pie',            img: 'images/Google/plain_pie.jpg',            tag: 'Pie' },
@@ -21,6 +22,7 @@ const PRODUCTS = {
   },
   pastry: {
     label: 'Pastries',
+    price: 650, // $6.50 each — placeholder
     hero: 'images/Google/meat_pastie_beef.webp',
     items: [
       { name: 'Meat Pastie (Beef)',    img: 'images/Google/meat_pastie_beef.webp',    tag: 'Pastie' },
@@ -31,6 +33,7 @@ const PRODUCTS = {
   },
   slice: {
     label: 'Slices',
+    price: 550, // $5.50 each — placeholder
     hero: 'images/Google/vanilla_slice.jpg',
     items: [
       { name: 'Vanilla Slice',          img: 'images/Google/vanilla_slice.jpg',         tag: 'Slice' },
@@ -47,6 +50,7 @@ const PRODUCTS = {
   },
   cake: {
     label: 'Cakes',
+    price: 2800, // $28.00 per cake — placeholder
     hero: 'images/Google/banana_cake.jpg',
     items: [
       { name: 'Banana Cake',  img: 'images/Google/banana_cake.jpg',   tag: 'Cake' },
@@ -57,6 +61,7 @@ const PRODUCTS = {
   },
   cookie: {
     label: 'Cookies',
+    price: 300, // $3.00 each — placeholder
     hero: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=1600&h=700&fit=crop&q=85',
     items: [
       { name: 'Fresh Cookies', img: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400&h=300&fit=crop&q=80', tag: 'TBC', note: 'Varieties coming soon. Enquire for details.' },
@@ -215,12 +220,14 @@ function initCountUp() {
   counters.forEach(c => observer.observe(c));
 }
 
-/* ── Customer Type Toggle (Change 2) ─────── */
+/* ── Customer Type Toggle ─────────────────── */
 function initCustomerTypeToggle() {
-  const radios          = document.querySelectorAll('input[name="customerType"]');
-  const businessGroup   = document.getElementById('businessNameGroup');
-  const businessInput   = document.getElementById('businessName');
-  const messageField    = document.getElementById('message');
+  const radios        = document.querySelectorAll('input[name="customerType"]');
+  const businessGroup = document.getElementById('businessNameGroup');
+  const businessInput = document.getElementById('businessName');
+  const abnGroup      = document.getElementById('abnGroup');
+  const abnInput      = document.getElementById('abn');
+  const messageField  = document.getElementById('message');
 
   const placeholders = {
     individual: 'Tell us about your order: quantity, occasion, delivery suburb…',
@@ -233,6 +240,10 @@ function initCustomerTypeToggle() {
       if (businessGroup) {
         businessGroup.style.display = isBusiness ? '' : 'none';
         if (businessInput) businessInput.required = isBusiness;
+      }
+      if (abnGroup) {
+        abnGroup.style.display = isBusiness ? '' : 'none';
+        if (abnInput) abnInput.required = isBusiness;
       }
       if (messageField) messageField.placeholder = placeholders[radio.value];
     });
@@ -253,20 +264,16 @@ function initCategoryPage() {
     return;
   }
 
-  // Update page title + meta
   document.title = `${data.label} | Croydon Bake House`;
 
-  // Set hero background
   const hero = document.getElementById('catPageHero');
   if (hero && data.hero) hero.style.backgroundImage = `url('${data.hero}')`;
 
-  // Set heading + count
   const titleEls = document.querySelectorAll('.js-cat-title');
   titleEls.forEach(el => { el.textContent = data.label; });
   const countEl = document.getElementById('catPageCount');
   if (countEl) countEl.textContent = `${data.items.length} ${data.items.length === 1 ? 'variety' : 'varieties'}`;
 
-  // Build product grid
   grid.innerHTML = data.items.map(item => `
     <div class="product-card">
       <div class="product-card__img-wrap">
@@ -276,27 +283,85 @@ function initCategoryPage() {
         <h3>${item.name}</h3>
         <span class="product-tag ${item.tag === 'TBC' ? 'product-tag--coming' : ''}">${item.tag}</span>
         ${item.note ? `<p class="product-note">${item.note}</p>` : ''}
-        <button class="product-card__add" data-name="${item.name}" data-img="${item.img}" data-cat="${data.label}" aria-label="Add ${item.name} to cart">
-          <i data-lucide="shopping-cart" aria-hidden="true"></i> Add to Cart
-        </button>
+        <div class="product-card__add-row">
+          <button class="product-card__add js-add-btn"
+                  data-name="${item.name}" data-img="${item.img}"
+                  data-cat="${data.label}" data-price="${data.price || 0}"
+                  aria-label="Add ${item.name} to cart">
+            <i data-lucide="shopping-cart" aria-hidden="true"></i> Add to Cart
+          </button>
+          <div class="product-card__qty-wrap" hidden>
+            <button class="qty-btn qty-dec-card" type="button" aria-label="Decrease quantity">−</button>
+            <input class="qty-input-card" type="number" value="1" min="1" max="99" aria-label="Quantity" />
+            <button class="qty-btn qty-inc-card" type="button" aria-label="Increase quantity">+</button>
+            <button class="product-card__confirm js-confirm-btn" type="button"
+                    data-name="${item.name}" data-img="${item.img}"
+                    data-cat="${data.label}" data-price="${data.price || 0}"
+                    aria-label="Confirm add to cart">
+              <i data-lucide="check" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   `).join('');
 
   if (typeof lucide !== 'undefined') lucide.createIcons();
 
-  grid.querySelectorAll('.product-card__add').forEach(btn => {
-    btn.addEventListener('click', () => {
-      addToCart({ name: btn.dataset.name, img: btn.dataset.img, category: btn.dataset.cat });
-      btn.classList.add('added');
-      btn.innerHTML = '<i data-lucide="check" aria-hidden="true"></i> Added!';
+  grid.addEventListener('click', (e) => {
+    const addBtn     = e.target.closest('.js-add-btn');
+    const decBtn     = e.target.closest('.qty-dec-card');
+    const incBtn     = e.target.closest('.qty-inc-card');
+    const confirmBtn = e.target.closest('.js-confirm-btn');
+
+    if (addBtn && !addBtn.hidden) {
+      const row      = addBtn.closest('.product-card__add-row');
+      const qtyWrap  = row.querySelector('.product-card__qty-wrap');
+      const qtyInput = qtyWrap.querySelector('.qty-input-card');
+      addBtn.hidden   = true;
+      qtyInput.value  = 1;
+      qtyWrap.hidden  = false;
+      qtyInput.focus();
+    }
+
+    if (decBtn) {
+      const input = decBtn.closest('.product-card__qty-wrap').querySelector('.qty-input-card');
+      const val   = parseInt(input.value) || 1;
+      if (val > 1) input.value = val - 1;
+    }
+
+    if (incBtn) {
+      const input = incBtn.closest('.product-card__qty-wrap').querySelector('.qty-input-card');
+      const val   = parseInt(input.value) || 1;
+      if (val < 99) input.value = val + 1;
+    }
+
+    if (confirmBtn) {
+      const row      = confirmBtn.closest('.product-card__add-row');
+      const qtyWrap  = row.querySelector('.product-card__qty-wrap');
+      const addBtn   = row.querySelector('.js-add-btn');
+      const input    = qtyWrap.querySelector('.qty-input-card');
+      const qty      = Math.max(1, Math.min(99, parseInt(input.value) || 1));
+
+      addToCart({
+        name:     confirmBtn.dataset.name,
+        img:      confirmBtn.dataset.img,
+        category: confirmBtn.dataset.cat,
+        price:    parseInt(confirmBtn.dataset.price) || 0,
+      }, qty);
+
+      qtyWrap.hidden = true;
+      addBtn.hidden  = false;
+      addBtn.classList.add('added');
+      addBtn.innerHTML = '<i data-lucide="check" aria-hidden="true"></i> Added!';
       if (typeof lucide !== 'undefined') lucide.createIcons();
+
       setTimeout(() => {
-        btn.classList.remove('added');
-        btn.innerHTML = '<i data-lucide="shopping-cart" aria-hidden="true"></i> Add to Cart';
+        addBtn.classList.remove('added');
+        addBtn.innerHTML = '<i data-lucide="shopping-cart" aria-hidden="true"></i> Add to Cart';
         if (typeof lucide !== 'undefined') lucide.createIcons();
       }, 1500);
-    });
+    }
   });
 }
 
@@ -443,13 +508,13 @@ function saveCart(cart) {
   updateCartBadge();
 }
 
-function addToCart(item) {
+function addToCart(item, qty = 1) {
   const cart = getCart();
   const existing = cart.find(c => c.name === item.name);
   if (existing) {
-    existing.qty += 1;
+    existing.qty += qty;
   } else {
-    cart.push({ name: item.name, img: item.img, category: item.category, qty: 1 });
+    cart.push({ name: item.name, img: item.img, category: item.category, price: item.price || 0, qty });
   }
   saveCart(cart);
 }
@@ -471,18 +536,32 @@ function initCartBadge() {
 
 /* ── Enquiry Form ────────────────────────── */
 function initEnquiryForm() {
-  const form       = document.getElementById('enquireForm');
+  const form = document.getElementById('enquireForm');
   if (!form) return;
 
   const fields = {
-    firstName:  { el: form.querySelector('#firstName'),  err: form.querySelector('#firstNameError'),  msg: 'Please enter your first name.' },
-    lastName:   { el: form.querySelector('#lastName'),   err: form.querySelector('#lastNameError'),   msg: 'Please enter your last name.' },
-    email:      { el: form.querySelector('#email'),      err: form.querySelector('#emailError'),      msg: 'Please enter a valid email address.' },
-    phone:      { el: form.querySelector('#phone'),      err: form.querySelector('#phoneError'),      msg: 'Please enter your phone number.' },
+    firstName: { el: form.querySelector('#firstName'), err: form.querySelector('#firstNameError'), msg: 'Please enter your first name.' },
+    lastName:  { el: form.querySelector('#lastName'),  err: form.querySelector('#lastNameError'),  msg: 'Please enter your last name.' },
+    email:     { el: form.querySelector('#email'),     err: form.querySelector('#emailError'),     msg: 'Please enter a valid email address.' },
+    phone:     { el: form.querySelector('#phone'),     err: form.querySelector('#phoneError'),     msg: 'Please enter your phone number.' },
   };
 
   const businessInput = document.getElementById('businessName');
   const businessErr   = document.getElementById('businessNameError');
+  const abnInput      = document.getElementById('abn');
+  const abnErr        = document.getElementById('abnError');
+
+  // Auto-format ABN as XX XXX XXX XXX while typing
+  if (abnInput) {
+    abnInput.addEventListener('input', () => {
+      const d = abnInput.value.replace(/\D/g, '').slice(0, 11);
+      let f = d;
+      if (d.length > 2)  f = d.slice(0,2) + ' ' + d.slice(2);
+      if (d.length > 5)  f = d.slice(0,2) + ' ' + d.slice(2,5) + ' ' + d.slice(5);
+      if (d.length > 8)  f = d.slice(0,2) + ' ' + d.slice(2,5) + ' ' + d.slice(5,8) + ' ' + d.slice(8);
+      abnInput.value = f;
+    });
+  }
 
   const validate = (key) => {
     const { el, err, msg } = fields[key];
@@ -504,13 +583,21 @@ function initEnquiryForm() {
 
     let allValid = Object.keys(fields).every(k => validate(k));
 
-    // Validate business name if Business type selected
     const isBusiness = document.querySelector('input[name="customerType"]:checked')?.value === 'business';
-    if (isBusiness && businessInput) {
-      const bValid = businessInput.value.trim().length > 0;
-      businessInput.classList.toggle('error', !bValid);
-      if (businessErr) businessErr.textContent = bValid ? '' : 'Please enter your business name.';
-      if (!bValid) allValid = false;
+    if (isBusiness) {
+      if (businessInput) {
+        const bValid = businessInput.value.trim().length > 0;
+        businessInput.classList.toggle('error', !bValid);
+        if (businessErr) businessErr.textContent = bValid ? '' : 'Please enter your business name.';
+        if (!bValid) allValid = false;
+      }
+      if (abnInput) {
+        const abnDigits = abnInput.value.replace(/\s/g, '');
+        const abnValid  = /^\d{11}$/.test(abnDigits);
+        abnInput.classList.toggle('error', !abnValid);
+        if (abnErr) abnErr.textContent = abnValid ? '' : 'Please enter a valid 11-digit ABN.';
+        if (!abnValid) allValid = false;
+      }
     }
 
     if (!allValid) {
@@ -522,12 +609,11 @@ function initEnquiryForm() {
     const btnText    = submitBtn.querySelector('.btn-text');
     const btnLoading = submitBtn.querySelector('.btn-loading');
     submitBtn.disabled = true;
-    btnText.hidden = true;
-    btnLoading.hidden = false;
+    btnText.hidden     = true;
+    btnLoading.hidden  = false;
 
     await new Promise(r => setTimeout(r, 1200));
 
-    // Hide the form, show success message in its place
     form.hidden = true;
     formSuccess.hidden = false;
     formSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });

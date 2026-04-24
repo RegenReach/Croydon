@@ -32,7 +32,7 @@
         <a href="#about" class="nav-link">About</a>
         <a href="#products" class="nav-link">Products</a>
         <a href="#gallery" class="nav-link">Gallery</a>
-        <a href="#blog" class="nav-link">Blog</a>
+        <a href="#heritage" class="nav-link">Our Story</a>
         <a href="#contact" class="nav-link">Contact</a>
       </nav>
       <div class="navbar__actions">
@@ -201,6 +201,13 @@
             <span class="form-error" id="businessNameError" role="alert" aria-live="polite"></span>
           </div>
 
+          <!-- ABN: shown only for Business type -->
+          <div class="form-group" id="abnGroup" style="display:none;">
+            <label for="abn">ABN <span class="required" aria-hidden="true">*</span></label>
+            <input type="text" id="abn" name="abn" inputmode="numeric" maxlength="14" placeholder="12 345 678 901" autocomplete="off" />
+            <span class="form-error" id="abnError" role="alert" aria-live="polite"></span>
+          </div>
+
           <div class="form-row">
             <div class="form-group">
               <label for="email">Email <span class="required" aria-hidden="true">*</span></label>
@@ -366,27 +373,38 @@
       </div>
     </section>
 
-    <!-- BLOG -->
-    <section class="blog" id="blog">
+    <!-- HERITAGE -->
+    <section class="heritage" id="heritage">
       <div class="container">
-        <div class="section-header reveal">
-          <span class="section-label">Latest News</span>
-          <h2 class="section-title">From the Bakehouse</h2>
-          <p class="section-subtitle">Tips, stories, and updates from our kitchen.</p>
-        </div>
-        <div class="blog-grid">
-          <article class="blog-card reveal" style="--delay:0ms">
-            <div class="blog-card__img-wrap"><img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&h=380&fit=crop&q=80" alt="Baker preparing dough" loading="lazy" /><span class="blog-card__category">Wholesale Tips</span></div>
-            <div class="blog-card__body"><time class="blog-card__date" datetime="2026-03-15">March 15, 2026</time><h3><a href="blog-bakery-supplier.html">How to Choose the Right Bakery Supplier for Your Café</a></h3><p>Selecting a reliable wholesale bakery partner is one of the most important decisions a café owner makes. Here is what to look for before you commit.</p><a href="blog-bakery-supplier.html" class="read-more">Read More <i data-lucide="arrow-right" aria-hidden="true"></i></a></div>
-          </article>
-          <article class="blog-card reveal" style="--delay:100ms">
-            <div class="blog-card__img-wrap"><img src="images/Google/steak_cheese_pie.jpg" alt="Freshly baked meat pies" loading="lazy" /><span class="blog-card__category">Recipe</span></div>
-            <div class="blog-card__body"><time class="blog-card__date" datetime="2026-03-01">March 1, 2026</time><h3><a href="blog-pie-recipe.html">How to Bake a Classic Aussie Meat Pie from Scratch</a></h3><p>There is something deeply satisfying about pulling a golden pie out of the oven. Here is our step-by-step guide to the filling, the pastry, and all the bits that actually matter.</p><a href="blog-pie-recipe.html" class="read-more">Read More <i data-lucide="arrow-right" aria-hidden="true"></i></a></div>
-          </article>
-          <article class="blog-card reveal" style="--delay:200ms">
-            <div class="blog-card__img-wrap"><img src="images/Google/sausage_roll.jpg" alt="Sausage rolls fresh from the oven" loading="lazy" /><span class="blog-card__category">Recipe</span></div>
-            <div class="blog-card__body"><time class="blog-card__date" datetime="2026-02-14">February 14, 2026</time><h3><a href="blog-sausage-rolls.html">The Secret to Perfect Sausage Rolls Every Time</a></h3><p>Flaky pastry, well-seasoned filling, crisp base. We break down exactly what goes into a sausage roll worth coming back for, with a full recipe you can make at home.</p><a href="blog-sausage-rolls.html" class="read-more">Read More <i data-lucide="arrow-right" aria-hidden="true"></i></a></div>
-          </article>
+        <div class="heritage__inner reveal">
+          <div class="heritage__badge">
+            <span class="heritage__since-label">Est.</span>
+            <span class="heritage__year" id="heritageYear">1998</span>
+            <!-- TODO: Update 1998 to the actual year the business was established -->
+          </div>
+          <div class="heritage__divider" aria-hidden="true"></div>
+          <div class="heritage__content">
+            <h2 class="heritage__tagline">A Croydon Institution,<br /><em>Baking Since Day One.</em></h2>
+            <p class="heritage__desc">Proudly serving Melbourne's cafés, restaurants, and families from our kitchen on Main Street. Every pie, pastry, and slice is baked fresh on the premises — no shortcuts, ever.</p>
+            <div class="heritage__stats">
+              <div class="heritage__stat">
+                <strong id="heritageYears">25+</strong>
+                <span>Years Baking</span>
+              </div>
+              <div class="heritage__stat">
+                <strong>100+</strong>
+                <span>Wholesale Partners</span>
+              </div>
+              <div class="heritage__stat">
+                <strong>6AM</strong>
+                <span>Fresh Every Day</span>
+              </div>
+              <div class="heritage__stat">
+                <strong>5.0 ★</strong>
+                <span>Google Rating</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -560,7 +578,7 @@
         <a href="https://www.facebook.com/croydonbakehouse" target="_blank" rel="noopener noreferrer" class="footer__social" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
         <a href="https://www.instagram.com/croydonbakehouse/" target="_blank" rel="noopener noreferrer" class="footer__social" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></a>
       </div>
-      <div class="footer__links"><h4>Navigation</h4><ul><li><a href="#enquire">Wholesale Enquiry</a></li><li><a href="#about">About Us</a></li><li><a href="#products">Products</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#blog">Blog</a></li><li><a href="#contact">Contact</a></li></ul></div>
+      <div class="footer__links"><h4>Navigation</h4><ul><li><a href="#enquire">Wholesale Enquiry</a></li><li><a href="#about">About Us</a></li><li><a href="#products">Products</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#heritage">Our Story</a></li><li><a href="#contact">Contact</a></li></ul></div>
       <div class="footer__links"><h4>Products</h4><ul><li><a href="category.html?cat=pie">Pies</a></li><li><a href="category.html?cat=pastry">Pastries</a></li><li><a href="category.html?cat=slice">Slices</a></li><li><a href="category.html?cat=cake">Cakes</a></li><li><a href="category.html?cat=cookie">Cookies</a></li></ul></div>
       <div class="footer__contact"><h4>Contact</h4><p>150 Main Street<br />Croydon VIC 3136</p><a href="tel:0397253161">03 9725 3161</a><p class="footer__hours">Mon–Sat: 6:00 AM – 5:30 PM<br />Sun: 7:00 AM – 3:00 PM</p></div>
     </div>
@@ -569,5 +587,12 @@
 
   <button class="back-to-top" id="backToTop" aria-label="Back to top"><i data-lucide="chevron-up" aria-hidden="true"></i></button>
   <script src="script.js"></script>
+  <script>
+    // Heritage section: compute years dynamically from establishment year
+    // TODO: Update 1998 to the actual year the bakery was established
+    const EST_YEAR = 1998;
+    const yearsEl = document.getElementById('heritageYears');
+    if (yearsEl) yearsEl.textContent = (new Date().getFullYear() - EST_YEAR) + '+';
+  </script>
 </body>
 </html>
